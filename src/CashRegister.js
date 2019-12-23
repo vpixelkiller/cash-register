@@ -1,18 +1,21 @@
-class cashRegister{
-    execute(price, cash, currentMoneyInCash){
-        return this.operate(price, cash, currentMoneyInCash)
-    }
+const SECOND_ARRAY_INDEX = 1
+const FIRST_ARRAY_INDEX = 0
 
+class cashRegister{
     constructor(){
         this.ACTUAL_STATE =  {status: "OPEN", change: [["QUARTER", 0.5]]}
         this.NOT_ENOUGHT_MONEY_IN_CASH = { status: "INSUFFICIENT_FUNDS", change: [] }
         this.COINPRICE = [100, 20, 10, 5, 1, 0.25, 0.1, 0.05, 0.01]
-
+        
         this.cashDictionary = {}
         this.cashValueArray = []
         this.cashKeyArray = []
         this.currentCoinAmount = 0
         this.changeToReturn = []
+    }
+
+    execute(price, cash, currentMoneyInCash){
+        return this.operate(price, cash, currentMoneyInCash)
     }
 
     returnChange(status, change){
@@ -26,7 +29,7 @@ class cashRegister{
         const thereIsMoney = this.thereIsMoney(cash, price) 
         const cashSum = this.cashSum(currentMoneyInCash)
         
-        this.cidExists(currentMoneyInCash)
+        this.thereIsMoneyInCashTrue(currentMoneyInCash)
         this.cashArray(currentMoneyInCash)
 
         return this.thereIsChangeEnought(cashSum, thereIsMoney, currentMoneyInCash)
@@ -41,7 +44,7 @@ class cashRegister{
         return this.returnChange ("OPEN", [changeDict])    
     }
 
-    cidExists(currentMoneyInCash){
+    thereIsMoneyInCashTrue(currentMoneyInCash){
         currentMoneyInCash = this.putsMoneyInCashIfThereIsNot(currentMoneyInCash)
     }
 
@@ -66,11 +69,10 @@ class cashRegister{
 
     cashArray(currentMoneyInCash){
         for (let i = 0; i < currentMoneyInCash.length; i++){
-            this.cashDictionary[currentMoneyInCash[i][0]] = currentMoneyInCash[i][1]
-            this.cashKeyArray.push(currentMoneyInCash[i][0])
-            this.cashValueArray.push(currentMoneyInCash[i][1])
+            this.cashDictionary[currentMoneyInCash[i][FIRST_ARRAY_INDEX]] = currentMoneyInCash[i][1]
+            this.cashKeyArray.push(currentMoneyInCash[i][FIRST_ARRAY_INDEX])
+            this.cashValueArray.push(currentMoneyInCash[i][SECOND_ARRAY_INDEX])
         }
-        return this.cashDictionary
     }
 
     change(thereIsMoney){
@@ -131,8 +133,6 @@ class cashRegister{
         }
         return resultArray
     }
-
-
 }
 
 
