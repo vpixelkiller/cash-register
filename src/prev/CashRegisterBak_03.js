@@ -8,10 +8,12 @@ var cashKeyArray = []
 var currentCoinAmount = 0
 var changeToReturn = []
 
+function checkCashRegister(price, cash, currentMoneyInCash) {
+    const sumCash = new cashRegister()
+    return sumCash.cashRegisterOperate(price, cash, currentMoneyInCash)
+}
+
 class cashRegister{
-    execute(price, cash, currentMoneyInCash){
-        return this.operate(price, cash, currentMoneyInCash)
-    }
 
     returnChange(status, change){
         ACTUAL_STATE.status = status
@@ -20,21 +22,23 @@ class cashRegister{
         return ACTUAL_STATE
     }
 
-    operate(price, cash, currentMoneyInCash){
-        const thereIsMoney = this.thereIsMoney(cash, price) 
+    cashRegisterOperate(price, cash, currentMoneyInCash){
+        const isMoneyAfterChange = this.isMoneyAfterChange(cash, price) 
         const cashSum = this.cashSum(currentMoneyInCash)
         
         this.cidExists(currentMoneyInCash)
         this.cashArray(currentMoneyInCash)
 
-        return this.thereIsChangeEnought(cashSum, thereIsMoney, currentMoneyInCash)
+        return this.thereAreChangeEnought(cashSum, isMoneyAfterChange, currentMoneyInCash)
     }
 
-    thereIsChangeEnought(cashSum, thereIsMoney){
-        const notEnoughtMoneyInCash = cashSum < thereIsMoney
-        if (notEnoughtMoneyInCash){return NOT_ENOUGHT_MONEY_IN_CASH}
+    thereAreChangeEnought(cashSum, isMoneyAfterChange){
+        const notEnoughtMoneyInCash = cashSum < isMoneyAfterChange
+        if (notEnoughtMoneyInCash){
+            return NOT_ENOUGHT_MONEY_IN_CASH
+        }
 
-        const changeDict = this.change(thereIsMoney)
+        const changeDict = this.change(isMoneyAfterChange)
 
         return this.returnChange ("OPEN", [changeDict])    
     }
@@ -50,11 +54,13 @@ class cashRegister{
     }
 
     itIsMoneyInCash(notCurrentMoneyInCash, currentMoneyInCash) {
-        if (notCurrentMoneyInCash) {currentMoneyInCash = []}
+        if (notCurrentMoneyInCash) {
+            currentMoneyInCash = []
+        }
         return currentMoneyInCash
     }
 
-    thereIsMoney(cash, price){
+    isMoneyAfterChange(cash, price){
         return cash - price
     }
 
@@ -71,47 +77,50 @@ class cashRegister{
         return cashDictionary
     }
 
-    change(thereIsMoney){
+    change(isMoneyAfterChange){
         const reverseCashValueArray = cashValueArray.reverse()
         
-        return this.countEachCoin(reverseCashValueArray, thereIsMoney)        
+        const changeToReturn = this.countEachCoin(reverseCashValueArray, isMoneyAfterChange)
+
+        return changeToReturn
+        
     }
 
-    countEachCoin(reverseCashValueArray, thereIsMoney){
+    countEachCoin(reverseCashValueArray, isMoneyAfterChange){
         const reverseCashKeyArray = cashKeyArray.reverse()
 
-        this.moreMoneyThanCoin(reverseCashValueArray, thereIsMoney, reverseCashKeyArray)
+        this.moreMoneyThanCoin(reverseCashValueArray, isMoneyAfterChange, reverseCashKeyArray)
 
         return changeToReturn
     }
 
-    moreMoneyThanCoin(reverseCashValueArray, thereIsMoney, reverseCashKeyArray){
+    moreMoneyThanCoin(reverseCashValueArray, isMoneyAfterChange, reverseCashKeyArray){
         for (let count=0; count<=reverseCashValueArray.length; count++){
             var actualCoinAmount = reverseCashValueArray[count]
             var actualCoinPrice = COINPRICE[count]
             
-            if (actualCoinPrice<thereIsMoney){
-                thereIsMoney = this.returnTimesAndRest(actualCoinPrice, actualCoinAmount, thereIsMoney)
+            if (actualCoinPrice<isMoneyAfterChange){
+                isMoneyAfterChange = this.returnTimesAndRest(actualCoinPrice, actualCoinAmount, isMoneyAfterChange)
                 changeToReturn.push(reverseCashKeyArray[count], currentCoinAmount*actualCoinPrice)
             }   
         }
         return changeToReturn        
     }
 
-    returnTimesAndRest(actualCoinPrice, actualCoinAmount, thereIsMoney){
+    returnTimesAndRest(actualCoinPrice, actualCoinAmount, isMoneyAfterChange){
         var counter = 0
-        while (this.testThereAreCoinsAndResult(counter, thereIsMoney, actualCoinAmount, actualCoinPrice)){
-        thereIsMoney -= actualCoinPrice
+        while (this.testThereAreCoinsAndResult(counter, isMoneyAfterChange, actualCoinAmount, actualCoinPrice)){
+        isMoneyAfterChange -= actualCoinPrice
         actualCoinAmount -= actualCoinPrice
         currentCoinAmount += 1
         }
-        return thereIsMoney
+        return isMoneyAfterChange
     }
 
-    testThereAreCoinsAndResult(counter, thereIsMoney, actualCoinAmount, actualCoinPrice){
+    testThereAreCoinsAndResult(counter, isMoneyAfterChange, actualCoinAmount, actualCoinPrice){
         counter += 1
-        if (thereIsMoney<0){return false}
-        if (thereIsMoney<actualCoinPrice){return false}
+        if (isMoneyAfterChange<0){return false}
+        if (isMoneyAfterChange<actualCoinPrice){return false}
         if (actualCoinAmount<actualCoinPrice){return false}
         return true
     }

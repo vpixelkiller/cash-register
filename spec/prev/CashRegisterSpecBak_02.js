@@ -4,9 +4,8 @@ describe ('cashRegister_test',()=>{
     const paymentCoin = 20
     const moneyInCashRegister = [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]
     const expectedResult = {status: "OPEN", change: [["QUARTER", 0.5]]}
-    const actualCash = new cashRegister()
 
-    const returnChange = actualCash.execute(price, paymentCoin, moneyInCashRegister)
+    const returnChange = checkCashRegister(price, paymentCoin, moneyInCashRegister)
 
     expect(returnChange).toEqual(expectedResult)
   })
@@ -37,9 +36,8 @@ describe ('cashRegister_test',()=>{
     const paymentCoin = 500
     const moneyInCashRegister = [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]
     const expectedResult = {status: "INSUFFICIENT_FUNDS", change: []}
-    const actualCash = new cashRegister()
 
-    const sendActualTransaction = actualCash.execute(price, paymentCoin, moneyInCashRegister)
+    const sendActualTransaction = checkCashRegister(price, paymentCoin, moneyInCashRegister)
 
     expect(sendActualTransaction).toEqual(expectedResult)
   })
@@ -49,9 +47,8 @@ describe ('cashRegister_test',()=>{
     const paymentCoin = 100
     const moneyInCashRegister = [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]
     const expectedResult = {status: "OPEN", change: [["TWENTY", 60], ["TEN", 20], ["FIVE", 15], ["ONE", 1], ["QUARTER", 0.5], ["DIME", 0.2], ["PENNY", 0.04]]}
-    const actualCash = new cashRegister()
 
-    const sendActualTransaction = actualCash.execute(price, paymentCoin, moneyInCashRegister)
+    const sendActualTransaction = checkCashRegister(price, paymentCoin, moneyInCashRegister)
 
     expect(sendActualTransaction).toEqual(expectedResult)
   })
