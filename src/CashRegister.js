@@ -1,23 +1,25 @@
-var ACTUAL_STATE =  {status: "OPEN", change: [["QUARTER", 0.5]]}
-const NOT_ENOUGHT_MONEY_IN_CASH = { status: "INSUFFICIENT_FUNDS", change: [] }
-const COINPRICE = [100, 20, 10, 5, 1, 0.25, 0.1, 0.05, 0.01]
-
-var cashDictionary = {}
-var cashValueArray = []
-var cashKeyArray = []
-var currentCoinAmount = 0
-var changeToReturn = []
-
 class cashRegister{
     execute(price, cash, currentMoneyInCash){
         return this.operate(price, cash, currentMoneyInCash)
     }
 
-    returnChange(status, change){
-        ACTUAL_STATE.status = status
-        ACTUAL_STATE.change = change
+    constructor(){
+        this.ACTUAL_STATE =  {status: "OPEN", change: [["QUARTER", 0.5]]}
+        this.NOT_ENOUGHT_MONEY_IN_CASH = { status: "INSUFFICIENT_FUNDS", change: [] }
+        this.COINPRICE = [100, 20, 10, 5, 1, 0.25, 0.1, 0.05, 0.01]
 
-        return ACTUAL_STATE
+        this.cashDictionary = {}
+        this.cashValueArray = []
+        this.cashKeyArray = []
+        this.currentCoinAmount = 0
+        this.changeToReturn = []
+    }
+
+    returnChange(status, change){
+        this.ACTUAL_STATE.status = status
+        this.ACTUAL_STATE.change = change
+
+        return this.ACTUAL_STATE
     }
 
     operate(price, cash, currentMoneyInCash){
@@ -32,7 +34,7 @@ class cashRegister{
 
     thereIsChangeEnought(cashSum, thereIsMoney){
         const notEnoughtMoneyInCash = cashSum < thereIsMoney
-        if (notEnoughtMoneyInCash){return NOT_ENOUGHT_MONEY_IN_CASH}
+        if (notEnoughtMoneyInCash){return this.NOT_ENOUGHT_MONEY_IN_CASH}
 
         const changeDict = this.change(thereIsMoney)
 
@@ -64,38 +66,38 @@ class cashRegister{
 
     cashArray(currentMoneyInCash){
         for (let i = 0; i < currentMoneyInCash.length; i++){
-            cashDictionary[currentMoneyInCash[i][0]] = currentMoneyInCash[i][1]
-            cashKeyArray.push(currentMoneyInCash[i][0])
-            cashValueArray.push(currentMoneyInCash[i][1])
+            this.cashDictionary[currentMoneyInCash[i][0]] = currentMoneyInCash[i][1]
+            this.cashKeyArray.push(currentMoneyInCash[i][0])
+            this.cashValueArray.push(currentMoneyInCash[i][1])
         }
-        return cashDictionary
+        return this.cashDictionary
     }
 
     change(thereIsMoney){
-        const reverseCashValueArray = cashValueArray.reverse()
+        const reverseCashValueArray = this.cashValueArray.reverse()
         
         return this.countEachCoin(reverseCashValueArray, thereIsMoney)        
     }
 
     countEachCoin(reverseCashValueArray, thereIsMoney){
-        const reverseCashKeyArray = cashKeyArray.reverse()
+        const reverseCashKeyArray = this.cashKeyArray.reverse()
 
         this.moreMoneyThanCoin(reverseCashValueArray, thereIsMoney, reverseCashKeyArray)
 
-        return changeToReturn
+        return this.changeToReturn
     }
 
     moreMoneyThanCoin(reverseCashValueArray, thereIsMoney, reverseCashKeyArray){
         for (let count=0; count<=reverseCashValueArray.length; count++){
             var actualCoinAmount = reverseCashValueArray[count]
-            var actualCoinPrice = COINPRICE[count]
+            var actualCoinPrice = this.COINPRICE[count]
             
             if (actualCoinPrice<thereIsMoney){
                 thereIsMoney = this.returnTimesAndRest(actualCoinPrice, actualCoinAmount, thereIsMoney)
-                changeToReturn.push(reverseCashKeyArray[count], currentCoinAmount*actualCoinPrice)
+                this.changeToReturn.push(reverseCashKeyArray[count], this.currentCoinAmount*actualCoinPrice)
             }   
         }
-        return changeToReturn        
+        return this.changeToReturn        
     }
 
     returnTimesAndRest(actualCoinPrice, actualCoinAmount, thereIsMoney){
@@ -103,7 +105,7 @@ class cashRegister{
         while (this.testThereAreCoinsAndResult(counter, thereIsMoney, actualCoinAmount, actualCoinPrice)){
         thereIsMoney -= actualCoinPrice
         actualCoinAmount -= actualCoinPrice
-        currentCoinAmount += 1
+        this.currentCoinAmount += 1
         }
         return thereIsMoney
     }
