@@ -1,4 +1,3 @@
-var currentCoinAmount = 0
 
 class cashRegister{
     constructor(){
@@ -15,30 +14,29 @@ class cashRegister{
         this.changeToReturn = []
     }
 
-    execute(price, cash, currentMoneyInCash){
-        return this.operate(price, cash, currentMoneyInCash)
+    execute(price, cash, moneyInCash){
+        return this.operate(price, cash, moneyInCash)
     }
 
     returnChange(status, change){
         this.ACTUAL_STATE.status = status
         this.ACTUAL_STATE.change = change
 
-        console.log(this.ACTUAL_STATE)
         return this.ACTUAL_STATE
     }
 
-    operate(price, cash, currentMoneyInCash){
+    operate(price, cash, moneyInCash){
         const moneyReturn = this.moneyReturn(cash, price) 
-        const cashSum = this.cashSum(currentMoneyInCash)
+        const amountMoneyInCashRegister = this.amountMoneyInCashRegister(moneyInCash)
         
-        this.thereIsMoneyInCashTrue(currentMoneyInCash)
-        this.cashArray(currentMoneyInCash)
+        this.thereIsMoneyInCashTrue(moneyInCash)
+        this.cashArray(moneyInCash)
 
-        return this.thereIsChangeEnought(cashSum, moneyReturn)
+        return this.thereIsChangeEnought(amountMoneyInCashRegister, moneyReturn)
     }
 
-    thereIsChangeEnought(cashSum, moneyReturn){
-        const notEnoughtMoneyInCash = cashSum < moneyReturn
+    thereIsChangeEnought(amountMoneyInCashRegister, moneyReturn){
+        const notEnoughtMoneyInCash = amountMoneyInCashRegister < moneyReturn
         if (notEnoughtMoneyInCash){return this.NOT_ENOUGHT_MONEY_IN_CASH}
 
         const changeDict = this.change(moneyReturn)
@@ -46,19 +44,19 @@ class cashRegister{
         return this.returnChange ("OPEN", changeDict)    
     }
 
-    thereIsMoneyInCashTrue(currentMoneyInCash){
-        currentMoneyInCash = this.putsMoneyInCashIfThereIsNot(currentMoneyInCash)
+    thereIsMoneyInCashTrue(moneyInCash){
+        moneyInCash = this.putsMoneyInCashIfThereIsNot(moneyInCash)
     }
 
-    putsMoneyInCashIfThereIsNot(currentMoneyInCash) {
-        const notCurrentMoneyInCash = !currentMoneyInCash
-        currentMoneyInCash = this.itIsMoneyInCash(notCurrentMoneyInCash, currentMoneyInCash)
-        return currentMoneyInCash
+    putsMoneyInCashIfThereIsNot(moneyInCash) {
+        const notmoneyInCash = !moneyInCash
+        moneyInCash = this.itIsMoneyInCash(notmoneyInCash, moneyInCash)
+        return moneyInCash
     }
 
-    itIsMoneyInCash(notCurrentMoneyInCash, currentMoneyInCash) {
-        if (notCurrentMoneyInCash) {currentMoneyInCash = []}
-        return currentMoneyInCash
+    itIsMoneyInCash(notmoneyInCash, moneyInCash) {
+        if (notmoneyInCash) {moneyInCash = []}
+        return moneyInCash
     }
 
     moneyReturn(cash, price){
@@ -69,11 +67,11 @@ class cashRegister{
         return totalChange/singleCoin
     }
 
-    cashArray(currentMoneyInCash){
-        for (let i = 0; i < currentMoneyInCash.length; i++){
-            this.cashDictionary[currentMoneyInCash[i][this.FIRST_ARRAY_INDEX]] = currentMoneyInCash[i][1]
-            this.cashKeyArray.push(currentMoneyInCash[i][this.FIRST_ARRAY_INDEX])
-            this.cashValueArray.push(currentMoneyInCash[i][this.SECOND_ARRAY_INDEX])
+    cashArray(moneyInCash){
+        for (let i = 0; i < moneyInCash.length; i++){
+            this.cashDictionary[moneyInCash[i][this.FIRST_ARRAY_INDEX]] = moneyInCash[i][1]
+            this.cashKeyArray.push(moneyInCash[i][this.FIRST_ARRAY_INDEX])
+            this.cashValueArray.push(moneyInCash[i][this.SECOND_ARRAY_INDEX])
         }
     }
 
@@ -95,10 +93,10 @@ class cashRegister{
         for (let count=0; count<=reverseCashValueArray.length; count++){
             var actualCoinAmount = reverseCashValueArray[count]
             var actualCoinPrice = this.COINPRICE[count]
-            currentCoinAmount = 0
+            this.currentCoinAmount = 0
             if (actualCoinPrice<=moneyReturn){
                 moneyReturn = this.returnTimesAndRest(actualCoinPrice, actualCoinAmount, moneyReturn)
-                this.changeToReturn.push([reverseCashKeyArray[count], currentCoinAmount*actualCoinPrice])
+                this.changeToReturn.push([reverseCashKeyArray[count], this.currentCoinAmount*actualCoinPrice])
             }   
         }
         return this.changeToReturn        
@@ -110,7 +108,7 @@ class cashRegister{
         moneyReturn = moneyReturn.toFixed(2)
         moneyReturn -= actualCoinPrice
         actualCoinAmount -= actualCoinPrice
-        currentCoinAmount += 1
+        this.currentCoinAmount += 1
         }
         return moneyReturn
     }
@@ -123,16 +121,16 @@ class cashRegister{
         return true
     }
 
-    cashSum(currentMoneyInCash){
+    amountMoneyInCashRegister(moneyInCash){
         const resultArray = 0
         
-        if (!currentMoneyInCash){return resultArray}
-        return this.sumsMoneyInCash(currentMoneyInCash, resultArray)
+        if (!moneyInCash){return resultArray}
+        return this.sumsMoneyInCash(moneyInCash, resultArray)
     }
 
-    sumsMoneyInCash(currentMoneyInCash, resultArray){
-        for (let i = 0; i < currentMoneyInCash.length; i++){
-            resultArray += currentMoneyInCash[i][1]
+    sumsMoneyInCash(moneyInCash, resultArray){
+        for (let i = 0; i < moneyInCash.length; i++){
+            resultArray += moneyInCash[i][1]
         }
         return resultArray
     }
