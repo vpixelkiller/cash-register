@@ -44,7 +44,7 @@ describe ('cashRegister_test',()=>{
     expect(sendActualTransaction).toEqual(expectedResult)
   })
 
-  xit('returns the correct change and the cash status "OPEN"', ()=> {
+-it('returns the correct change and the cash status "OPEN"', ()=> {
     const price = 3.26
     const paymentCoin = 100
     const moneyInCashRegister = [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]
