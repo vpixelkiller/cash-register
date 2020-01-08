@@ -44,7 +44,7 @@ describe ('cashRegister_test',()=>{
     expect(sendActualTransaction).toEqual(expectedResult)
   })
 
--it('returns the correct change and the cash status "OPEN"', ()=> {
+  it('returns the correct change and the cash status "OPEN"', ()=> {
     const price = 3.26
     const paymentCoin = 100
     const moneyInCashRegister = [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]
@@ -55,15 +55,4 @@ describe ('cashRegister_test',()=>{
 
     expect(sendActualTransaction).toEqual(expectedResult)
   })
-
-  // it ('returns the nikel value', ()=> {
-  //   const moneyInCashRegister = [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]
-  //   const expectedResult = 2.05
-  //   const coinName = "NIKEL"
-  //   const actualCash = new cashRegister()
-
-  //   const sendActualTransaction = actualCash.getCurrentValue(moneyInCashRegister,coinName)
-
-  //   expect (sendActualTransaction).toEqual(expectedResult)
-  // })
 })

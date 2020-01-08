@@ -1,11 +1,11 @@
+const SECOND_ARRAY_INDEX = 1
+const FIRST_ARRAY_INDEX = 0
+const COINPRICE = [100, 20, 10, 5, 1, 0.25, 0.1, 0.05, 0.01]
+const NOT_ENOUGHT_MONEY_IN_CASH = { status: "INSUFFICIENT_FUNDS", change: [] }
 
 class cashRegister{
     constructor(){
-        this.SECOND_ARRAY_INDEX = 1
-        this.FIRST_ARRAY_INDEX = 0
-        this.ACTUAL_STATE =  {status: "OPEN", change: [["QUARTER", 0.5]]}
-        this.NOT_ENOUGHT_MONEY_IN_CASH = { status: "INSUFFICIENT_FUNDS", change: [] }
-        this.COINPRICE = [100, 20, 10, 5, 1, 0.25, 0.1, 0.05, 0.01]
+        this.actual_state =  {status: "OPEN", change: [["QUARTER", 0.5]]}
         
         this.cashDictionary = {}
         this.cashValueArray = []
@@ -19,10 +19,10 @@ class cashRegister{
     }
 
     returnChange(status, change){
-        this.ACTUAL_STATE.status = status
-        this.ACTUAL_STATE.change = change
+        this.actual_state.status = status
+        this.actual_state.change = change
 
-        return this.ACTUAL_STATE
+        return this.actual_state
     }
 
     operate(price, cash, moneyInCash){
@@ -37,7 +37,7 @@ class cashRegister{
 
     thereIsChangeEnought(amountMoneyInCashRegister, moneyReturn){
         const notEnoughtMoneyInCash = amountMoneyInCashRegister < moneyReturn
-        if (notEnoughtMoneyInCash){return this.NOT_ENOUGHT_MONEY_IN_CASH}
+        if (notEnoughtMoneyInCash){return NOT_ENOUGHT_MONEY_IN_CASH}
 
         const changeDict = this.change(moneyReturn)
 
@@ -69,9 +69,9 @@ class cashRegister{
 
     cashArray(moneyInCash){
         for (let i = 0; i < moneyInCash.length; i++){
-            this.cashDictionary[moneyInCash[i][this.FIRST_ARRAY_INDEX]] = moneyInCash[i][1]
-            this.cashKeyArray.push(moneyInCash[i][this.FIRST_ARRAY_INDEX])
-            this.cashValueArray.push(moneyInCash[i][this.SECOND_ARRAY_INDEX])
+            this.cashDictionary[moneyInCash[i][FIRST_ARRAY_INDEX]] = moneyInCash[i][1]
+            this.cashKeyArray.push(moneyInCash[i][FIRST_ARRAY_INDEX])
+            this.cashValueArray.push(moneyInCash[i][SECOND_ARRAY_INDEX])
         }
     }
 
@@ -92,14 +92,23 @@ class cashRegister{
     moreMoneyThanCoin(reverseCashValueArray, moneyReturn, reverseCashKeyArray){
         for (let count=0; count<=reverseCashValueArray.length; count++){
             var actualCoinAmount = reverseCashValueArray[count]
-            var actualCoinPrice = this.COINPRICE[count]
+            var actualCoinPrice = COINPRICE[count]
             this.currentCoinAmount = 0
-            if (actualCoinPrice<=moneyReturn){
-                moneyReturn = this.returnTimesAndRest(actualCoinPrice, actualCoinAmount, moneyReturn)
-                this.changeToReturn.push([reverseCashKeyArray[count], this.currentCoinAmount*actualCoinPrice])
-            }   
+            moneyReturn = this.substractFromReturnAmount(actualCoinPrice, moneyReturn, actualCoinAmount, reverseCashKeyArray, count)   
         }
         return this.changeToReturn        
+    }
+
+    substractFromReturnAmount(actualCoinPrice, moneyReturn, actualCoinAmount, reverseCashKeyArray, count) {
+        if (actualCoinPrice <= moneyReturn) {
+            moneyReturn = this.returnTimesAndRest(actualCoinPrice, actualCoinAmount, moneyReturn)
+            this.addEachAmonutEachCoinKind(reverseCashKeyArray, count, actualCoinPrice)
+        }
+        return moneyReturn
+    }
+
+    addEachAmonutEachCoinKind(reverseCashKeyArray, count, actualCoinPrice) {
+        this.changeToReturn.push([reverseCashKeyArray[count], this.currentCoinAmount * actualCoinPrice])
     }
 
     returnTimesAndRest(actualCoinPrice, actualCoinAmount, moneyReturn){
