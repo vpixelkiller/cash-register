@@ -1,4 +1,4 @@
-class moneyOperations{
+class MoneyOperations{
   workingTest(){
     return 'money operations is working'
   }

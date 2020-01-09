@@ -3,7 +3,7 @@ const FIRST_ARRAY_INDEX = 0
 const COINPRICE = [100, 20, 10, 5, 1, 0.25, 0.1, 0.05, 0.01]
 const NOT_ENOUGHT_MONEY_IN_CASH = { status: "INSUFFICIENT_FUNDS", change: [] }
 
-class cashRegister{
+class CashRegister{
     constructor(){
         this.actual_state =  {status: "OPEN", change: [["QUARTER", 0.5]]}
         
@@ -15,7 +15,7 @@ class cashRegister{
     }
 
     execute(price, cash, moneyInCash){
-        const newMoneyOperation = new moneyOperations()
+        const newMoneyOperation = new MoneyOperations()
 
         const moneyReturn = newMoneyOperation.moneyReturn(cash, price) 
         const amountMoneyInCashRegister = newMoneyOperation.amountMoneyInCashRegister(moneyInCash)
@@ -26,8 +26,16 @@ class cashRegister{
         return this.thereIsChangeEnought(amountMoneyInCashRegister, moneyReturn)
     }
 
+    getCashValueArray(cashValueArray){
+
+    }
+
+    getCashKeyArray(cashKeyArray){
+
+    }
+
     cashConvert(moneyInCash) {
-        const newConversions = new conversions()
+        const newConversions = new Conversions()
 
         const moneyInCashToArraysConversion = newConversions.cashArray(moneyInCash)
 

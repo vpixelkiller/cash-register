@@ -1,6 +1,6 @@
 
 
-class conversions {
+class Conversions {
   constructor(){
     this.cashDictionary = {}
     this.cashValueArray = []

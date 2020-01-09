@@ -4,7 +4,7 @@ describe ('cashRegister_test',()=>{
     const paymentCoin = 20
     const moneyInCashRegister = [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]
     const expectedResult = {status: "OPEN", change: [["QUARTER", 0.5]]}
-    const actualCash = new cashRegister()
+    const actualCash = new CashRegister()
 
     const returnChange = actualCash.execute(price, paymentCoin, moneyInCashRegister)
 
@@ -12,7 +12,7 @@ describe ('cashRegister_test',()=>{
   })
 
   it('returns how many coins of a value there are, with a given amount of money', ()=>{
-    const actualCash = new cashRegister()
+    const actualCash = new CashRegister()
     const singleCoin = 0.01
     const totalChange = 0.5
     const expectedResult = 50
@@ -23,7 +23,7 @@ describe ('cashRegister_test',()=>{
   })
 
   it('check if there is enought money in the chash for return the given change', ()=>{
-    const actualCash = new cashRegister()
+    const actualCash = new CashRegister()
     const moneyInCashRegister = [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]
     const expectedResult = 0
     
@@ -37,7 +37,7 @@ describe ('cashRegister_test',()=>{
     const paymentCoin = 500
     const moneyInCashRegister = [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]
     const expectedResult = {status: "INSUFFICIENT_FUNDS", change: []}
-    const actualCash = new cashRegister()
+    const actualCash = new CashRegister()
 
     const sendActualTransaction = actualCash.execute(price, paymentCoin, moneyInCashRegister)
 
@@ -49,16 +49,18 @@ describe ('cashRegister_test',()=>{
     const paymentCoin = 100
     const moneyInCashRegister = [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]
     const expectedResult = {status: "OPEN", change: [["TWENTY", 60], ["TEN", 20], ["FIVE", 15], ["ONE", 1], ["QUARTER", 0.5], ["DIME", 0.2], ["PENNY", 0.04]]}
-    const actualCash = new cashRegister()
+    const actualCash = new CashRegister()
 
     const sendActualTransaction = actualCash.execute(price, paymentCoin, moneyInCashRegister)
 
     expect(sendActualTransaction).toEqual(expectedResult)
   })
 })
+
+
 describe('Money operations group', ()=>{
   it('Test connection', ()=>{
-    const newOperation = new moneyOperations()
+    const newOperation = new MoneyOperations()
     const expectedResult = "money operations is working"
 
     const sendActualTransaction = newOperation.workingTest()
@@ -67,7 +69,7 @@ describe('Money operations group', ()=>{
   })
 
   it('returns the amount of money to return', ()=>{
-    const newOperation = new moneyOperations()
+    const newOperation = new MoneyOperations()
     const price = 3.26
     const cash = 100
     const expectedResult = cash - price 
@@ -78,7 +80,7 @@ describe('Money operations group', ()=>{
   })
 
   it('returns the amount money in cash', ()=>{
-    const newOperation = new moneyOperations()
+    const newOperation = new MoneyOperations()
     const moneyInCash = [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]
     const expectedResult = 335.40999999999997
 
@@ -90,7 +92,7 @@ describe('Money operations group', ()=>{
   })
 
   it('converts the dictionary in arrays', ()=>{
-    const newOperation = new conversions()
+    const newOperation = new Conversions()
     const moneyInCash = [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]
     const keysArray = ["PENNY", "NICKEL", "DIME", "QUARTER", "ONE", "FIVE", "TEN", "TWENTY", "ONE HUNDRED"]
     const valuesArray = [1.01, 2.05, 3.1, 4.25, 90, 55, 20, 60, 100]
