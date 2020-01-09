@@ -7,7 +7,7 @@ class cashRegister{
     constructor(){
         this.actual_state =  {status: "OPEN", change: [["QUARTER", 0.5]]}
         
-        this.cashDictionary = {}
+        // this.cashDictionary = {}
         this.cashValueArray = []
         this.cashKeyArray = []
         this.currentCoinAmount = 0
@@ -15,7 +15,24 @@ class cashRegister{
     }
 
     execute(price, cash, moneyInCash){
-        return this.operate(price, cash, moneyInCash)
+        const newMoneyOperation = new moneyOperations()
+
+        const moneyReturn = newMoneyOperation.moneyReturn(cash, price) 
+        const amountMoneyInCashRegister = newMoneyOperation.amountMoneyInCashRegister(moneyInCash)
+        
+        newMoneyOperation.putsMoneyInCashIfThereIsNot(moneyInCash)
+        this.cashConvert(moneyInCash)
+   
+        return this.thereIsChangeEnought(amountMoneyInCashRegister, moneyReturn)
+    }
+
+    cashConvert(moneyInCash) {
+        const newConversions = new conversions()
+
+        const moneyInCashToArraysConversion = newConversions.cashArray(moneyInCash)
+
+        this.cashKeyArray = moneyInCashToArraysConversion[FIRST_ARRAY_INDEX]
+        this.cashValueArray = moneyInCashToArraysConversion[SECOND_ARRAY_INDEX]
     }
 
     returnChange(status, change){
@@ -23,16 +40,6 @@ class cashRegister{
         this.actual_state.change = change
 
         return this.actual_state
-    }
-
-    operate(price, cash, moneyInCash){
-        const moneyReturn = this.moneyReturn(cash, price) 
-        const amountMoneyInCashRegister = this.amountMoneyInCashRegister(moneyInCash)
-        
-        this.thereIsMoneyInCashTrue(moneyInCash)
-        this.cashArray(moneyInCash)
-
-        return this.thereIsChangeEnought(amountMoneyInCashRegister, moneyReturn)
     }
 
     thereIsChangeEnought(amountMoneyInCashRegister, moneyReturn){
@@ -44,46 +51,45 @@ class cashRegister{
         return this.returnChange ("OPEN", changeDict)    
     }
 
-    thereIsMoneyInCashTrue(moneyInCash){
-        moneyInCash = this.putsMoneyInCashIfThereIsNot(moneyInCash)
-    }
+    // thereIsMoneyInCashTrue(moneyInCash){
+    //     moneyInCash = this.putsMoneyInCashIfThereIsNot(moneyInCash)
+    // }
 
-    putsMoneyInCashIfThereIsNot(moneyInCash) {
-        const notmoneyInCash = !moneyInCash
-        moneyInCash = this.itIsMoneyInCash(notmoneyInCash, moneyInCash)
-        return moneyInCash
-    }
+    // putsMoneyInCashIfThereIsNot(moneyInCash) {
+    //     const notmoneyInCash = !moneyInCash
+    //     moneyInCash = this.itIsMoneyInCash(notmoneyInCash, moneyInCash)
+    //     return moneyInCash
+    // }
 
-    itIsMoneyInCash(notmoneyInCash, moneyInCash) {
-        if (notmoneyInCash) {moneyInCash = []}
-        return moneyInCash
-    }
+    // itIsMoneyInCash(notmoneyInCash, moneyInCash) {
+    //     if (notmoneyInCash) {moneyInCash = []}
+    //     return moneyInCash
+    // }
 
-    moneyReturn(cash, price){
-        return cash - price
-    }
+    // moneyReturn(cash, price){
+    //     return cash - price
+    // }
 
     timesSingleCoin(singleCoin, totalChange){
         return totalChange/singleCoin
     }
 
-    cashArray(moneyInCash){
-        for (let i = 0; i < moneyInCash.length; i++){
-            this.cashDictionary[moneyInCash[i][FIRST_ARRAY_INDEX]] = moneyInCash[i][1]
-            this.cashKeyArray.push(moneyInCash[i][FIRST_ARRAY_INDEX])
-            this.cashValueArray.push(moneyInCash[i][SECOND_ARRAY_INDEX])
-        }
-    }
+    // cashArray(moneyInCash){
+    //     for (let i = 0; i < moneyInCash.length; i++){
+    //         this.cashDictionary[moneyInCash[i][FIRST_ARRAY_INDEX]] = moneyInCash[i][1]
+    //         this.cashKeyArray.push(moneyInCash[i][FIRST_ARRAY_INDEX])
+    //         this.cashValueArray.push(moneyInCash[i][SECOND_ARRAY_INDEX])
+    //     }
+    // }
 
     change(moneyReturn){
         const reverseCashValueArray = this.cashValueArray.reverse()
-        
         return this.countEachCoin(reverseCashValueArray, moneyReturn)        
     }
 
     countEachCoin(reverseCashValueArray, moneyReturn){
         const reverseCashKeyArray = this.cashKeyArray.reverse()
-
+        console.log(reverseCashKeyArray)
         this.moreMoneyThanCoin(reverseCashValueArray, moneyReturn, reverseCashKeyArray)
 
         return this.changeToReturn

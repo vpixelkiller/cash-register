@@ -56,3 +56,55 @@ describe ('cashRegister_test',()=>{
     expect(sendActualTransaction).toEqual(expectedResult)
   })
 })
+describe('Money operations group', ()=>{
+  it('Test connection', ()=>{
+    const newOperation = new moneyOperations()
+    const expectedResult = "money operations is working"
+
+    const sendActualTransaction = newOperation.workingTest()
+
+    expect(sendActualTransaction).toEqual(expectedResult)
+  })
+
+  it('returns the amount of money to return', ()=>{
+    const newOperation = new moneyOperations()
+    const price = 3.26
+    const cash = 100
+    const expectedResult = cash - price 
+
+    const sendActualTransaction = newOperation.moneyReturn(cash, price)
+
+    expect(sendActualTransaction).toEqual(expectedResult)
+  })
+
+  it('returns the amount money in cash', ()=>{
+    const newOperation = new moneyOperations()
+    const moneyInCash = [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]
+    const expectedResult = 335.40999999999997
+
+    const sendActualTransaction = newOperation.amountMoneyInCashRegister(moneyInCash)
+
+    expect(sendActualTransaction).toEqual(expectedResult)
+
+
+  })
+
+  it('converts the dictionary in arrays', ()=>{
+    const newOperation = new conversions()
+    const moneyInCash = [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]
+    const keysArray = ["PENNY", "NICKEL", "DIME", "QUARTER", "ONE", "FIVE", "TEN", "TWENTY", "ONE HUNDRED"]
+    const valuesArray = [1.01, 2.05, 3.1, 4.25, 90, 55, 20, 60, 100]
+    const conversionsKeysArray = newOperation.returnKeysArray()
+    const conversionsValuesArray = newOperation.returnValuesArray()
+    const expectedResult = [keysArray, valuesArray]
+    const receivedTransaction = [conversionsKeysArray, conversionsValuesArray]
+
+    newOperation.cashArray(moneyInCash)
+
+    expect(expectedResult).toEqual(receivedTransaction)
+
+
+
+  })
+
+})
