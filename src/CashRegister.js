@@ -26,14 +26,6 @@ class CashRegister{
         return this.thereIsChangeEnought(amountMoneyInCashRegister, moneyReturn)
     }
 
-    getCashValueArray(cashValueArray){
-
-    }
-
-    getCashKeyArray(cashKeyArray){
-
-    }
-
     cashConvert(moneyInCash) {
         const newConversions = new Conversions()
 
@@ -59,36 +51,9 @@ class CashRegister{
         return this.returnChange ("OPEN", changeDict)    
     }
 
-    // thereIsMoneyInCashTrue(moneyInCash){
-    //     moneyInCash = this.putsMoneyInCashIfThereIsNot(moneyInCash)
-    // }
-
-    // putsMoneyInCashIfThereIsNot(moneyInCash) {
-    //     const notmoneyInCash = !moneyInCash
-    //     moneyInCash = this.itIsMoneyInCash(notmoneyInCash, moneyInCash)
-    //     return moneyInCash
-    // }
-
-    // itIsMoneyInCash(notmoneyInCash, moneyInCash) {
-    //     if (notmoneyInCash) {moneyInCash = []}
-    //     return moneyInCash
-    // }
-
-    // moneyReturn(cash, price){
-    //     return cash - price
-    // }
-
     timesSingleCoin(singleCoin, totalChange){
         return totalChange/singleCoin
     }
-
-    // cashArray(moneyInCash){
-    //     for (let i = 0; i < moneyInCash.length; i++){
-    //         this.cashDictionary[moneyInCash[i][FIRST_ARRAY_INDEX]] = moneyInCash[i][1]
-    //         this.cashKeyArray.push(moneyInCash[i][FIRST_ARRAY_INDEX])
-    //         this.cashValueArray.push(moneyInCash[i][SECOND_ARRAY_INDEX])
-    //     }
-    // }
 
     change(moneyReturn){
         const reverseCashValueArray = this.cashValueArray.reverse()
@@ -97,7 +62,6 @@ class CashRegister{
 
     countEachCoin(reverseCashValueArray, moneyReturn){
         const reverseCashKeyArray = this.cashKeyArray.reverse()
-        console.log(reverseCashKeyArray)
         this.moreMoneyThanCoin(reverseCashValueArray, moneyReturn, reverseCashKeyArray)
 
         return this.changeToReturn
@@ -126,8 +90,7 @@ class CashRegister{
     }
 
     returnTimesAndRest(actualCoinPrice, actualCoinAmount, moneyReturn){
-        var counter = 0
-        while (this.testThereAreCoinsAndResult(counter, moneyReturn, actualCoinAmount, actualCoinPrice)){
+        while (this.testThereAreCoinsAndResult(moneyReturn, actualCoinAmount, actualCoinPrice)){
         moneyReturn = moneyReturn.toFixed(2)
         moneyReturn -= actualCoinPrice
         actualCoinAmount -= actualCoinPrice
@@ -136,11 +99,10 @@ class CashRegister{
         return moneyReturn
     }
 
-    testThereAreCoinsAndResult(counter, moneyReturn, actualCoinAmount, actualCoinPrice){
-        counter += 1
-        if (moneyReturn<0){return false}
-        if (moneyReturn<actualCoinPrice){return false}
-        if (actualCoinAmount<actualCoinPrice){return false}
+    testThereAreCoinsAndResult(moneyReturn, actualCoinAmount, actualCoinPrice){
+        if (moneyReturn < 0 || moneyReturn < actualCoinPrice || actualCoinAmount < actualCoinPrice) {
+            return false
+        } 
         return true
     }
 

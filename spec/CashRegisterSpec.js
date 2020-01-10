@@ -60,31 +60,31 @@ describe ('cashRegister_test',()=>{
 
 describe('Money operations group', ()=>{
   it('Test connection', ()=>{
-    const newOperation = new MoneyOperations()
+    const newMoneyOperation = new MoneyOperations()
     const expectedResult = "money operations is working"
 
-    const sendActualTransaction = newOperation.workingTest()
+    const sendActualTransaction = newMoneyOperation.workingTest()
 
     expect(sendActualTransaction).toEqual(expectedResult)
   })
 
   it('returns the amount of money to return', ()=>{
-    const newOperation = new MoneyOperations()
+    const newMoneyOperation = new MoneyOperations()
     const price = 3.26
     const cash = 100
     const expectedResult = cash - price 
 
-    const sendActualTransaction = newOperation.moneyReturn(cash, price)
+    const sendActualTransaction = newMoneyOperation.moneyReturn(cash, price)
 
     expect(sendActualTransaction).toEqual(expectedResult)
   })
 
   it('returns the amount money in cash', ()=>{
-    const newOperation = new MoneyOperations()
+    const newMoneyOperation = new MoneyOperations()
     const moneyInCash = [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]
     const expectedResult = 335.40999999999997
 
-    const sendActualTransaction = newOperation.amountMoneyInCashRegister(moneyInCash)
+    const sendActualTransaction = newMoneyOperation.amountMoneyInCashRegister(moneyInCash)
 
     expect(sendActualTransaction).toEqual(expectedResult)
 
@@ -92,21 +92,37 @@ describe('Money operations group', ()=>{
   })
 
   it('converts the dictionary in arrays', ()=>{
-    const newOperation = new Conversions()
+    const newMoneyOperation = new Conversions()
     const moneyInCash = [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]
     const keysArray = ["PENNY", "NICKEL", "DIME", "QUARTER", "ONE", "FIVE", "TEN", "TWENTY", "ONE HUNDRED"]
     const valuesArray = [1.01, 2.05, 3.1, 4.25, 90, 55, 20, 60, 100]
-    const conversionsKeysArray = newOperation.returnKeysArray()
-    const conversionsValuesArray = newOperation.returnValuesArray()
+    const conversionsKeysArray = newMoneyOperation.returnKeysArray()
+    const conversionsValuesArray = newMoneyOperation.returnValuesArray()
     const expectedResult = [keysArray, valuesArray]
     const receivedTransaction = [conversionsKeysArray, conversionsValuesArray]
 
-    newOperation.cashArray(moneyInCash)
+    newMoneyOperation.cashArray(moneyInCash)
 
     expect(expectedResult).toEqual(receivedTransaction)
+  })
 
+  it('returns true if there is change enought', ()=>{
+    const newMoneyOperation = new MoneyOperations()
+    const moneyInCash = [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]
+    const moneyReturn = 233
+    const moneyInCashRegister = newMoneyOperation.amountMoneyInCashRegister(moneyInCash)
+    const receivedTransaction = newMoneyOperation.thereIsChangeEnought(moneyInCashRegister, moneyReturn)
 
+    expect(true).toEqual(receivedTransaction)
+  })
 
+  it('returns the change', ()=>{
+    const newMoneyOperation = new MoneyOperations()
+    const valuesArray = [1.01, 2.05, 3.1, 4.25, 90, 55, 20, 60, 100]
+    const keysArray = ["PENNY", "NICKEL", "DIME", "QUARTER", "ONE", "FIVE", "TEN", "TWENTY", "ONE HUNDRED"]
+    const moneyReturn = 233
+
+    const kko = newMoneyOperation.change(moneyReturn, valuesArray, keysArray)
   })
 
 })
