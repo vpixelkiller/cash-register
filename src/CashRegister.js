@@ -10,6 +10,8 @@ class CashRegister{
         // this.cashDictionary = {}
         this.cashValueArray = []
         this.cashKeyArray = []
+        this.reverseCashValueArray = []
+        this.reverseCashKeyArray = []
         this.currentCoinAmount = 0
         this.changeToReturn = []
     }
@@ -45,6 +47,7 @@ class CashRegister{
     thereIsChangeEnought(amountMoneyInCashRegister, moneyReturn){
         const notEnoughtMoneyInCash = amountMoneyInCashRegister < moneyReturn
         if (notEnoughtMoneyInCash){return NOT_ENOUGHT_MONEY_IN_CASH}
+
 
         const changeDict = this.change(moneyReturn)
 
@@ -91,10 +94,10 @@ class CashRegister{
 
     returnTimesAndRest(actualCoinPrice, actualCoinAmount, moneyReturn){
         while (this.testThereAreCoinsAndResult(moneyReturn, actualCoinAmount, actualCoinPrice)){
-        moneyReturn = moneyReturn.toFixed(2)
-        moneyReturn -= actualCoinPrice
-        actualCoinAmount -= actualCoinPrice
-        this.currentCoinAmount += 1
+            moneyReturn = moneyReturn.toFixed(2)
+            moneyReturn -= actualCoinPrice
+            actualCoinAmount -= actualCoinPrice
+            this.currentCoinAmount += 1
         }
         return moneyReturn
     }

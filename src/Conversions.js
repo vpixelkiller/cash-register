@@ -16,6 +16,11 @@ class Conversions {
     return [this.cashKeyArray, this.cashValueArray]
   }
 
+  reverseArray(array){
+    return array.reverse()
+  }
+
+
   returnKeysArray(){
     return this.cashKeyArray
   }
