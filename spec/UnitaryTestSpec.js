@@ -88,23 +88,22 @@ describe('Unitary test specs', ()=>{
 
   it('there is money to return yet', ()=>{
     const newMoneyOperation = new MoneyOperations()
-    const expectedResult = false
-    const expectedResultNeeded = true
+    const expectedResult = true
+    const expectedResultNeeded = false
     const moneyReturn = 0
     const moneyReturnNeeded = 1
 
     const NotMoneyToReturn = newMoneyOperation.thereIsMoneyToReturnYet(moneyReturn)
     const MoneyToReturn = newMoneyOperation.thereIsMoneyToReturnYet(moneyReturnNeeded )
 
-    console.log('not: ' + NotMoneyToReturn, ' yes: ' + MoneyToReturn)
     expect (expectedResult).toEqual(NotMoneyToReturn)
     expect (expectedResultNeeded).toEqual(MoneyToReturn)
   })
 
   it('there is more money to return than actual coin', ()=>{
     const newMoneyOperation = new MoneyOperations()
-    const expectedResult = false
-    const expectedResultBigger = true
+    const expectedResult = true
+    const expectedResultBigger = false
     const moneyReturn = 1
     const moneyReturnBigger = 0.5
     const actualCoinPrice = 2
@@ -118,10 +117,10 @@ describe('Unitary test specs', ()=>{
 
   it('there is actual coin amount to substract this coin price', ()=>{
     const newMoneyOperation = new MoneyOperations()
-    const expectedResult = false
+    const expectedResult = true
     const actualCoinAmount = 0.5
     const actualCoinPrice = 2
-
+    
     const returnTransaction = newMoneyOperation.actualCoinAmountBiggerThanActualCoinPrice(actualCoinAmount, actualCoinPrice)
 
     expect (expectedResult).toEqual(returnTransaction)

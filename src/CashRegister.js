@@ -93,7 +93,9 @@ class CashRegister{
     }
 
     returnTimesAndRest(actualCoinPrice, actualCoinAmount, moneyReturn){
-        while (this.testThereAreCoinsAndResult(moneyReturn, actualCoinAmount, actualCoinPrice)){
+        const newMoneyOperation = new MoneyOperations()
+
+        while (newMoneyOperation.testThereAreCoinsAndResult(moneyReturn, actualCoinAmount, actualCoinPrice)){
             moneyReturn = moneyReturn.toFixed(2)
             moneyReturn -= actualCoinPrice
             actualCoinAmount -= actualCoinPrice

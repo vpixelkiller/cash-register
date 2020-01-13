@@ -106,25 +106,28 @@ class MoneyOperations
   }
 
   testThereAreCoinsAndResult(moneyReturn, actualCoinAmount, actualCoinPrice){
-    if (thereIsMoneyToReturnYet(moneyReturn)) return false
-    if (actualCoinBiggerThanMoneyToReturn(moneyReturn, actualCoinPrice)) return false
-    if (actualCoinAmountBiggerActualCoinPrice(actualCoinAmount, actualCoinPrice)) return false
+    if (this.thereIsMoneyToReturnYet(moneyReturn)) return false
+    if (this.actualCoinBiggerThanMoneyToReturn(moneyReturn, actualCoinPrice)) return false
+    if (this.actualCoinAmountBiggerThanActualCoinPrice(actualCoinAmount, actualCoinPrice)) return false
     return true
   }
 
   thereIsMoneyToReturnYet(moneyReturn)
   {
-    return moneyReturn <= 0 ? false : true
+    console.log ('dinero a devolver: ' + moneyReturn)
+    return moneyReturn <= 0 ? true : false
   }
 
   actualCoinBiggerThanMoneyToReturn(moneyReturn, actualCoinPrice)
   {
-    return moneyReturn < actualCoinPrice ? false : true
+    console.log('dinero a devolver: ' + moneyReturn + ' monedaActual: ' + actualCoinPrice)
+    return moneyReturn < actualCoinPrice ? true : false
   }
 
   actualCoinAmountBiggerThanActualCoinPrice(actualCoinAmount, actualCoinPrice)
   {
-    return actualCoinAmount < actualCoinPrice ? false : true
+    console.log('monedas actuales: ' + actualCoinAmount + ' monedaActual: ' + actualCoinPrice)
+    return actualCoinAmount < actualCoinPrice ? true : false
   }
 
 }
