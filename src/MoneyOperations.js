@@ -3,6 +3,8 @@ class MoneyOperations
   constructor ()
   {
         this.changeToReturn = []
+        this.currentCoinAmount = 0
+
   }
   workingTest()
   {
@@ -41,17 +43,6 @@ class MoneyOperations
     
     return true
   }
-  
-  // moreMoneyThanCoin(reverseCashValueArray, moneyReturn, reverseCashKeyArray){
-  //   console.log(reverseCashValueArray)
-  //   for (let count=0; count<=reverseCashValueArray.length; count++){
-  //     var actualCoinAmount = reverseCashValueArray[count]
-  //     var actualCoinPrice = COINPRICE[count]
-  //     this.currentCoinAmount = 0
-  //     moneyReturn = this.substractFromReturnAmount(actualCoinPrice, moneyReturn, actualCoinAmount, reverseCashKeyArray, count)   
-  //   }
-  // return this.changeToReturn   
-  // }
 
   returnTimesAndRest(actualCoinPrice, actualCoinAmount, moneyReturn)
   {
@@ -105,6 +96,16 @@ class MoneyOperations
     return keyList
   }
 
+  returnTimesAndRest(actualCoinPrice, actualCoinAmount, moneyReturn){
+    while (this.testThereAreCoinsAndResult(moneyReturn, actualCoinAmount, actualCoinPrice)){
+        moneyReturn = moneyReturn.toFixed(2)
+        moneyReturn -= actualCoinPrice
+        actualCoinAmount -= actualCoinPrice
+        this.currentCoinAmount += 1
+    }
+    return moneyReturn
+}
+
   testThereAreCoinsAndResult(moneyReturn, actualCoinAmount, actualCoinPrice){
     if (this.thereIsMoneyToReturnYet(moneyReturn)) return false
     if (this.actualCoinBiggerThanMoneyToReturn(moneyReturn, actualCoinPrice)) return false
@@ -114,19 +115,16 @@ class MoneyOperations
 
   thereIsMoneyToReturnYet(moneyReturn)
   {
-    console.log ('dinero a devolver: ' + moneyReturn)
     return moneyReturn <= 0 ? true : false
   }
 
   actualCoinBiggerThanMoneyToReturn(moneyReturn, actualCoinPrice)
   {
-    console.log('dinero a devolver: ' + moneyReturn + ' monedaActual: ' + actualCoinPrice)
     return moneyReturn < actualCoinPrice ? true : false
   }
 
   actualCoinAmountBiggerThanActualCoinPrice(actualCoinAmount, actualCoinPrice)
   {
-    console.log('monedas actuales: ' + actualCoinAmount + ' monedaActual: ' + actualCoinPrice)
     return actualCoinAmount < actualCoinPrice ? true : false
   }
 

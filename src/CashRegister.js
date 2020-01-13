@@ -7,7 +7,6 @@ class CashRegister{
     constructor(){
         this.actual_state =  {status: "OPEN", change: [["QUARTER", 0.5]]}
         
-        // this.cashDictionary = {}
         this.cashValueArray = []
         this.cashKeyArray = []
         this.reverseCashValueArray = []
@@ -81,6 +80,8 @@ class CashRegister{
     }
 
     substractFromReturnAmount(actualCoinPrice, moneyReturn, actualCoinAmount, reverseCashKeyArray, count) {
+        const newMoneyOperation = new MoneyOperations()
+
         if (actualCoinPrice <= moneyReturn) {
             moneyReturn = this.returnTimesAndRest(actualCoinPrice, actualCoinAmount, moneyReturn)
             this.addEachAmonutEachCoinKind(reverseCashKeyArray, count, actualCoinPrice)
