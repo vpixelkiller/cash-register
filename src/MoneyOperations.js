@@ -43,17 +43,6 @@ class MoneyOperations
     
     return true
   }
-
-  returnTimesAndRest(actualCoinPrice, actualCoinAmount, moneyReturn)
-  {
-    while (this.testThereAreCoinsAndResult(moneyReturn, actualCoinAmount, actualCoinPrice)){
-      moneyReturn = moneyReturn.toFixed(2)
-      moneyReturn -= actualCoinPrice
-      actualCoinAmount -= actualCoinPrice
-      this.currentCoinAmount += 1
-    }
-    return moneyReturn
-  }
   
   testThereAreCoinsAndResult(moneyReturn, actualCoinAmount, actualCoinPrice)
   {
@@ -97,13 +86,14 @@ class MoneyOperations
   }
 
   returnTimesAndRest(actualCoinPrice, actualCoinAmount, moneyReturn){
+
     while (this.testThereAreCoinsAndResult(moneyReturn, actualCoinAmount, actualCoinPrice)){
         moneyReturn = moneyReturn.toFixed(2)
         moneyReturn -= actualCoinPrice
         actualCoinAmount -= actualCoinPrice
         this.currentCoinAmount += 1
     }
-    return moneyReturn
+    return [moneyReturn, this.currentCoinAmount]
 }
 
   testThereAreCoinsAndResult(moneyReturn, actualCoinAmount, actualCoinPrice){

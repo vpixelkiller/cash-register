@@ -83,7 +83,9 @@ class CashRegister{
         const newMoneyOperation = new MoneyOperations()
 
         if (actualCoinPrice <= moneyReturn) {
-            moneyReturn = this.returnTimesAndRest(actualCoinPrice, actualCoinAmount, moneyReturn)
+            const kko = newMoneyOperation.returnTimesAndRest(actualCoinPrice, actualCoinAmount, moneyReturn)
+            moneyReturn = kko[0]
+            this.currentCoinAmount = kko[1]
             this.addEachAmonutEachCoinKind(reverseCashKeyArray, count, actualCoinPrice)
         }
         return moneyReturn
