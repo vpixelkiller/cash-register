@@ -84,19 +84,25 @@ class CashRegister{
     }
 
     enouthMoneyReturnForSubstractActualCoinPrice(actualCoinPrice, moneyReturn, actualCoinAmount, reverseCashKeyArray, count) {
-        const newMoneyOperation = new MoneyOperations()
-
+        
         if (actualCoinPrice <= moneyReturn){
-            const timesSubstractedActualCoinAndRest = newMoneyOperation.returnTimesAndRest(actualCoinPrice, actualCoinAmount, moneyReturn)
+            const timesSubstractedActualCoinAndRest = this.timesSubstractedActualCoinAndRest(actualCoinPrice, actualCoinAmount, moneyReturn)
+            
             moneyReturn = timesSubstractedActualCoinAndRest[0]
             this.currentCoinAmount = timesSubstractedActualCoinAndRest[1]
+            
             this.addEachAmonutEachCoinKind(reverseCashKeyArray, count, actualCoinPrice)
         }
         return moneyReturn
     }
-
-    addEachAmonutEachCoinKind(reverseCashKeyArray, count, actualCoinPrice) {
+    
+    addEachAmonutEachCoinKind(reverseCashKeyArray, count, actualCoinPrice){
         this.changeToReturn.push([reverseCashKeyArray[count], this.currentCoinAmount * actualCoinPrice])
+    }
+    
+    timesSubstractedActualCoinAndRest(actualCoinPrice, actualCoinAmount, moneyReturn){
+        const newMoneyOperation = new MoneyOperations()
+        return newMoneyOperation.returnTimesAndRest(actualCoinPrice, actualCoinAmount, moneyReturn)
     }
 }
 
