@@ -2,20 +2,18 @@ class MoneyOperations
 {
   constructor ()
   {
-        this.changeToReturn = []
-        this.currentCoinAmount = 0
-
+    this.changeToReturn = []
+    this.currentCoinAmount = 0
   }
-  workingTest()
-  {
+  workingTest(){
     return 'money operations is working'
   }
-  moneyReturn(cash, price)
-  {
+
+  moneyReturn(cash, price){
     return cash - price
   }
-  amountMoneyInCashRegister(moneyInCash)
-  {
+
+  amountMoneyInCashRegister(moneyInCash){
     const resultArray = 0
     
     if (!moneyInCash){return resultArray}
@@ -44,22 +42,19 @@ class MoneyOperations
     return true
   }
   
-  countEachCoin(reverseCashValueArray, moneyReturn, reverseCashKeyArray)
-  {
+  countEachCoin(reverseCashValueArray, moneyReturn, reverseCashKeyArray){
     this.moreMoneyThanCoin(reverseCashValueArray, moneyReturn, reverseCashKeyArray)
 
     return this.changeToReturn
   }
 
-  moreMoneyThanCoin(reverseCashValueArray, moneyReturn, reverseCashKeyArray)
-  {
+  moreMoneyThanCoin(reverseCashValueArray, moneyReturn, reverseCashKeyArray){
       for (let count=0; count<=reverseCashValueArray.length; count++){
         var actualCoinAmount = reverseCashValueArray[count]
         var actualCoinPrice = COINPRICE[count]
         this.currentCoinAmount = 0
         moneyReturn = this.substractFromReturnAmount(actualCoinPrice, moneyReturn, actualCoinAmount, reverseCashKeyArray, count)   
       }
-
       return this.changeToReturn        
   }
 
@@ -101,8 +96,6 @@ class MoneyOperations
     return !(thereIsMoney || notValidCoin || hasEnoughMoney)
   }
 
-
-
   thereIsStillMoneyToReturn(moneyReturn)
   {
     return moneyReturn <= 0
@@ -117,5 +110,4 @@ class MoneyOperations
   {
     return actualCoinAmount < actualCoinPrice
   }
-
 }

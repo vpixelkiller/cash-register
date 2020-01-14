@@ -6,7 +6,6 @@ const NOT_ENOUGHT_MONEY_IN_CASH = { status: "INSUFFICIENT_FUNDS", change: [] }
 class CashRegister{
     constructor(){
         this.actual_state =  {status: "OPEN", change: [["QUARTER", 0.5]]}
-        
         this.cashValueArray = []
         this.cashKeyArray = []
         this.reverseCashValueArray = []
@@ -78,6 +77,8 @@ class CashRegister{
     }
 
     substractFromReturnAmount(actualCoinPrice, moneyReturn, actualCoinAmount, reverseCashKeyArray, count) {
+        const newMoneyOperation = new MoneyOperations()
+
         moneyReturn = this.enouthMoneyReturnForSubstractActualCoinPrice(actualCoinPrice, moneyReturn, actualCoinAmount, reverseCashKeyArray, count)
         return moneyReturn
     }
@@ -85,7 +86,7 @@ class CashRegister{
     enouthMoneyReturnForSubstractActualCoinPrice(actualCoinPrice, moneyReturn, actualCoinAmount, reverseCashKeyArray, count) {
         const newMoneyOperation = new MoneyOperations()
 
-        if (actualCoinPrice <= moneyReturn) {
+        if (actualCoinPrice <= moneyReturn){
             const timesSubstractedActualCoinAndRest = newMoneyOperation.returnTimesAndRest(actualCoinPrice, actualCoinAmount, moneyReturn)
             moneyReturn = timesSubstractedActualCoinAndRest[0]
             this.currentCoinAmount = timesSubstractedActualCoinAndRest[1]

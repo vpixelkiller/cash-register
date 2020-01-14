@@ -34,6 +34,5 @@ class Conversions {
         resultArray += moneyInCash[i][1]
     }
     return resultArray
-}
-
+  }
 }
