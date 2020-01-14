@@ -23,11 +23,11 @@ describe ('cashRegister_test',()=>{
   })
 
   it('check if there is enought money in the chash for return the given change', ()=>{
-    const actualCash = new CashRegister()
+    const newMoneyOperation = new MoneyOperations()
     const moneyInCashRegister = [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]
     const expectedResult = 0
     
-    const sendActualTransaction = actualCash.amountMoneyInCashRegister(moneyInCashRegister)
+    const sendActualTransaction = newMoneyOperation.amountMoneyInCashRegister(moneyInCashRegister)
 
     expect(sendActualTransaction).toBeGreaterThan(expectedResult)
   })

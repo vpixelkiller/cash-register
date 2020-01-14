@@ -29,4 +29,11 @@ class Conversions {
     return this.cashValueArray
   }
 
+  sumsMoneyInCash(moneyInCash, resultArray){
+    for (let i = 0; i < moneyInCash.length; i++){
+        resultArray += moneyInCash[i][1]
+    }
+    return resultArray
+}
+
 }

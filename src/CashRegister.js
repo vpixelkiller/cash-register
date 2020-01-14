@@ -17,23 +17,24 @@ class CashRegister{
 
     execute(price, cash, moneyInCash){
         const newMoneyOperation = new MoneyOperations()
-
+        
         const moneyReturn = newMoneyOperation.moneyReturn(cash, price) 
         const amountMoneyInCashRegister = newMoneyOperation.amountMoneyInCashRegister(moneyInCash)
         
         newMoneyOperation.putsMoneyInCashIfThereIsNot(moneyInCash)
         this.cashConvert(moneyInCash)
-   
+        
         return this.thereIsChangeEnought(amountMoneyInCashRegister, moneyReturn)
     }
-
+    
     cashConvert(moneyInCash) {
         const newConversions = new Conversions()
-
         const moneyInCashToArraysConversion = newConversions.cashArray(moneyInCash)
-
+        
         this.cashKeyArray = moneyInCashToArraysConversion[FIRST_ARRAY_INDEX]
         this.cashValueArray = moneyInCashToArraysConversion[SECOND_ARRAY_INDEX]
+        this.reverseCashValueArray = this.cashValueArray.reverse()
+        this.reverseCashKeyArray = this.cashKeyArray.reverse()
     }
 
     returnChange(status, change){
@@ -45,10 +46,9 @@ class CashRegister{
 
     thereIsChangeEnought(amountMoneyInCashRegister, moneyReturn){
         const notEnoughtMoneyInCash = amountMoneyInCashRegister < moneyReturn
-        if (notEnoughtMoneyInCash){return NOT_ENOUGHT_MONEY_IN_CASH}
-
-
         const changeDict = this.change(moneyReturn)
+      
+        if (notEnoughtMoneyInCash){return NOT_ENOUGHT_MONEY_IN_CASH}
 
         return this.returnChange ("OPEN", changeDict)    
     }
@@ -58,13 +58,11 @@ class CashRegister{
     }
 
     change(moneyReturn){
-        const reverseCashValueArray = this.cashValueArray.reverse()
-        return this.countEachCoin(reverseCashValueArray, moneyReturn)        
+        return this.countEachCoin(moneyReturn)        
     }
 
-    countEachCoin(reverseCashValueArray, moneyReturn){
-        const reverseCashKeyArray = this.cashKeyArray.reverse()
-        this.moreMoneyThanCoin(reverseCashValueArray, moneyReturn, reverseCashKeyArray)
+    countEachCoin(moneyReturn){
+        this.moreMoneyThanCoin(this.reverseCashValueArray, moneyReturn, this.reverseCashKeyArray)
 
         return this.changeToReturn
     }
@@ -80,13 +78,13 @@ class CashRegister{
     }
 
     substractFromReturnAmount(actualCoinPrice, moneyReturn, actualCoinAmount, reverseCashKeyArray, count) {
-        const newMoneyOperation = new MoneyOperations()
-
-        moneyReturn = this.enouthMoneyReturnForSubstractActualCoinPrice(actualCoinPrice, moneyReturn, newMoneyOperation, actualCoinAmount, reverseCashKeyArray, count)
+        moneyReturn = this.enouthMoneyReturnForSubstractActualCoinPrice(actualCoinPrice, moneyReturn, actualCoinAmount, reverseCashKeyArray, count)
         return moneyReturn
     }
 
-    enouthMoneyReturnForSubstractActualCoinPrice(actualCoinPrice, moneyReturn, newMoneyOperation, actualCoinAmount, reverseCashKeyArray, count) {
+    enouthMoneyReturnForSubstractActualCoinPrice(actualCoinPrice, moneyReturn, actualCoinAmount, reverseCashKeyArray, count) {
+        const newMoneyOperation = new MoneyOperations()
+
         if (actualCoinPrice <= moneyReturn) {
             const timesSubstractedActualCoinAndRest = newMoneyOperation.returnTimesAndRest(actualCoinPrice, actualCoinAmount, moneyReturn)
             moneyReturn = timesSubstractedActualCoinAndRest[0]
@@ -98,27 +96,6 @@ class CashRegister{
 
     addEachAmonutEachCoinKind(reverseCashKeyArray, count, actualCoinPrice) {
         this.changeToReturn.push([reverseCashKeyArray[count], this.currentCoinAmount * actualCoinPrice])
-    }
-
-    testThereAreCoinsAndResult(moneyReturn, actualCoinAmount, actualCoinPrice){
-        if (moneyReturn < 0 || moneyReturn < actualCoinPrice || actualCoinAmount < actualCoinPrice) {
-            return false
-        } 
-        return true
-    }
-
-    amountMoneyInCashRegister(moneyInCash){
-        const resultArray = 0
-        
-        if (!moneyInCash){return resultArray}
-        return this.sumsMoneyInCash(moneyInCash, resultArray)
-    }
-
-    sumsMoneyInCash(moneyInCash, resultArray){
-        for (let i = 0; i < moneyInCash.length; i++){
-            resultArray += moneyInCash[i][1]
-        }
-        return resultArray
     }
 }
 

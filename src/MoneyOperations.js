@@ -44,14 +44,6 @@ class MoneyOperations
     return true
   }
   
-  testThereAreCoinsAndResult(moneyReturn, actualCoinAmount, actualCoinPrice)
-  {
-    if (moneyReturn < 0 || moneyReturn < actualCoinPrice || actualCoinAmount < actualCoinPrice) {
-      return false
-    } 
-    return true
-  }
-
   countEachCoin(reverseCashValueArray, moneyReturn, reverseCashKeyArray)
   {
     this.moreMoneyThanCoin(reverseCashValueArray, moneyReturn, reverseCashKeyArray)
@@ -67,6 +59,7 @@ class MoneyOperations
         this.currentCoinAmount = 0
         moneyReturn = this.substractFromReturnAmount(actualCoinPrice, moneyReturn, actualCoinAmount, reverseCashKeyArray, count)   
       }
+
       return this.changeToReturn        
   }
 
@@ -77,6 +70,10 @@ class MoneyOperations
       this.addEachAmonutEachCoinKind(reverseCashKeyArray, count, actualCoinPrice)
     }
     return moneyReturn
+  }
+
+  addEachAmonutEachCoinKind(reverseCashKeyArray, count, actualCoinPrice) {
+    this.changeToReturn.push([reverseCashKeyArray[count], this.currentCoinAmount * actualCoinPrice])
   }
 
   addCointypeAndPrice(keyList, coinAndQuantity)
@@ -97,25 +94,28 @@ class MoneyOperations
 }
 
   testThereAreCoinsAndResult(moneyReturn, actualCoinAmount, actualCoinPrice){
-    if (this.thereIsMoneyToReturnYet(moneyReturn)) return false
-    if (this.actualCoinBiggerThanMoneyToReturn(moneyReturn, actualCoinPrice)) return false
-    if (this.actualCoinAmountBiggerThanActualCoinPrice(actualCoinAmount, actualCoinPrice)) return false
-    return true
+    const thereIsMoney = this.thereIsStillMoneyToReturn (moneyReturn)
+    const notValidCoin = this.actualCoinBiggerThanMoneyToReturn(moneyReturn, actualCoinPrice)
+    const hasEnoughMoney = this.actualCoinAmountBiggerThanActualCoinPrice(actualCoinAmount, actualCoinPrice)
+    
+    return !(thereIsMoney || notValidCoin || hasEnoughMoney)
   }
 
-  thereIsMoneyToReturnYet(moneyReturn)
+
+
+  thereIsStillMoneyToReturn(moneyReturn)
   {
-    return moneyReturn <= 0 ? true : false
+    return moneyReturn <= 0
   }
 
   actualCoinBiggerThanMoneyToReturn(moneyReturn, actualCoinPrice)
   {
-    return moneyReturn < actualCoinPrice ? true : false
+    return moneyReturn < actualCoinPrice
   }
 
   actualCoinAmountBiggerThanActualCoinPrice(actualCoinAmount, actualCoinPrice)
   {
-    return actualCoinAmount < actualCoinPrice ? true : false
+    return actualCoinAmount < actualCoinPrice
   }
 
 }

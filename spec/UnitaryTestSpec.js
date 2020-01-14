@@ -93,8 +93,8 @@ describe('Unitary test specs', ()=>{
     const moneyReturn = 0
     const moneyReturnNeeded = 1
 
-    const NotMoneyToReturn = newMoneyOperation.thereIsMoneyToReturnYet(moneyReturn)
-    const MoneyToReturn = newMoneyOperation.thereIsMoneyToReturnYet(moneyReturnNeeded )
+    const NotMoneyToReturn = newMoneyOperation.thereIsStillMoneyToReturn(moneyReturn)
+    const MoneyToReturn = newMoneyOperation.thereIsStillMoneyToReturn(moneyReturnNeeded )
 
     expect (expectedResult).toEqual(NotMoneyToReturn)
     expect (expectedResultNeeded).toEqual(MoneyToReturn)
