@@ -82,10 +82,15 @@ class CashRegister{
     substractFromReturnAmount(actualCoinPrice, moneyReturn, actualCoinAmount, reverseCashKeyArray, count) {
         const newMoneyOperation = new MoneyOperations()
 
+        moneyReturn = this.enouthMoneyReturnForSubstractActualCoinPrice(actualCoinPrice, moneyReturn, newMoneyOperation, actualCoinAmount, reverseCashKeyArray, count)
+        return moneyReturn
+    }
+
+    enouthMoneyReturnForSubstractActualCoinPrice(actualCoinPrice, moneyReturn, newMoneyOperation, actualCoinAmount, reverseCashKeyArray, count) {
         if (actualCoinPrice <= moneyReturn) {
-            const kko = newMoneyOperation.returnTimesAndRest(actualCoinPrice, actualCoinAmount, moneyReturn)
-            moneyReturn = kko[0]
-            this.currentCoinAmount = kko[1]
+            const timesSubstractedActualCoinAndRest = newMoneyOperation.returnTimesAndRest(actualCoinPrice, actualCoinAmount, moneyReturn)
+            moneyReturn = timesSubstractedActualCoinAndRest[0]
+            this.currentCoinAmount = timesSubstractedActualCoinAndRest[1]
             this.addEachAmonutEachCoinKind(reverseCashKeyArray, count, actualCoinPrice)
         }
         return moneyReturn
@@ -93,18 +98,6 @@ class CashRegister{
 
     addEachAmonutEachCoinKind(reverseCashKeyArray, count, actualCoinPrice) {
         this.changeToReturn.push([reverseCashKeyArray[count], this.currentCoinAmount * actualCoinPrice])
-    }
-
-    returnTimesAndRest(actualCoinPrice, actualCoinAmount, moneyReturn){
-        const newMoneyOperation = new MoneyOperations()
-
-        while (newMoneyOperation.testThereAreCoinsAndResult(moneyReturn, actualCoinAmount, actualCoinPrice)){
-            moneyReturn = moneyReturn.toFixed(2)
-            moneyReturn -= actualCoinPrice
-            actualCoinAmount -= actualCoinPrice
-            this.currentCoinAmount += 1
-        }
-        return moneyReturn
     }
 
     testThereAreCoinsAndResult(moneyReturn, actualCoinAmount, actualCoinPrice){
