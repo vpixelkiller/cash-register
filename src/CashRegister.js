@@ -26,6 +26,8 @@ class CashRegister{
         return this.thereIsChangeEnought(amountMoneyInCashRegister, moneyReturn)
     }
     
+// Private
+
     cashConvert(moneyInCash) {
         const newConversions = new Conversions()
         const moneyInCashToArraysConversion = newConversions.cashArray(moneyInCash)
@@ -77,32 +79,38 @@ class CashRegister{
     }
 
     substractFromReturnAmount(actualCoinPrice, moneyReturn, actualCoinAmount, reverseCashKeyArray, count) {
-        const newMoneyOperation = new MoneyOperations()
-
+        
         moneyReturn = this.enouthMoneyReturnForSubstractActualCoinPrice(actualCoinPrice, moneyReturn, actualCoinAmount, reverseCashKeyArray, count)
         return moneyReturn
     }
-
+    
     enouthMoneyReturnForSubstractActualCoinPrice(actualCoinPrice, moneyReturn, actualCoinAmount, reverseCashKeyArray, count) {
-        
-        if (actualCoinPrice <= moneyReturn){
-            const timesSubstractedActualCoinAndRest = this.timesSubstractedActualCoinAndRest(actualCoinPrice, actualCoinAmount, moneyReturn)
-            
-            moneyReturn = timesSubstractedActualCoinAndRest[0]
-            this.currentCoinAmount = timesSubstractedActualCoinAndRest[1]
-            
-            this.addEachAmonutEachCoinKind(reverseCashKeyArray, count, actualCoinPrice)
+        if (this.isActualCoinPriceSmallerThanTheMoneyReturn(actualCoinPrice, moneyReturn)){
+            moneyReturn = this.substractThisCoinPriceFromMoneyReturn(actualCoinPrice, actualCoinAmount, moneyReturn, reverseCashKeyArray, count)
         }
         return moneyReturn
     }
     
-    addEachAmonutEachCoinKind(reverseCashKeyArray, count, actualCoinPrice){
-        this.changeToReturn.push([reverseCashKeyArray[count], this.currentCoinAmount * actualCoinPrice])
+    isActualCoinPriceSmallerThanTheMoneyReturn(actualCoinPrice, moneyReturn) {
+        return actualCoinPrice <= moneyReturn
+    }
+
+    substractThisCoinPriceFromMoneyReturn(actualCoinPrice, actualCoinAmount, moneyReturn, reverseCashKeyArray, count) {
+        moneyReturn = this.timesSubstractedActualCoinAndRest(actualCoinPrice, actualCoinAmount, moneyReturn)
+        this.addEachAmonutEachCoinKind(reverseCashKeyArray, count, actualCoinPrice)
+        return moneyReturn
     }
     
     timesSubstractedActualCoinAndRest(actualCoinPrice, actualCoinAmount, moneyReturn){
         const newMoneyOperation = new MoneyOperations()
-        return newMoneyOperation.returnTimesAndRest(actualCoinPrice, actualCoinAmount, moneyReturn)
+        const timesSubstractedActualCoinAndRest = newMoneyOperation.returnTimesAndRest(actualCoinPrice, actualCoinAmount, moneyReturn)
+        moneyReturn = timesSubstractedActualCoinAndRest[0]
+        this.currentCoinAmount = timesSubstractedActualCoinAndRest[1]
+        return moneyReturn
+    }
+
+    addEachAmonutEachCoinKind(reverseCashKeyArray, count, actualCoinPrice){
+        this.changeToReturn.push([reverseCashKeyArray[count], this.currentCoinAmount * actualCoinPrice])
     }
 }
 
