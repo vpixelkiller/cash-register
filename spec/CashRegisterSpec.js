@@ -11,23 +11,12 @@ describe ('cashRegister_test',()=>{
     expect(returnChange).toEqual(expectedResult)
   })
 
-  it('returns how many coins of a value there are, with a given amount of money', ()=>{
-    const actualCash = new CashRegister()
-    const singleCoin = 0.01
-    const totalChange = 0.5
-    const expectedResult = 50
-
-    const timesSingleCoin = actualCash.timesSingleCoin(singleCoin, totalChange)
-
-    expect(timesSingleCoin).toEqual(expectedResult)
-  })
-
   it('check if there is enought money in the chash for return the given change', ()=>{
     const newMoneyOperation = new MoneyOperations()
     const moneyInCashRegister = [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]
     const expectedResult = 0
     
-    const sendActualTransaction = newMoneyOperation.amountMoneyInCashRegister(moneyInCashRegister)
+    const sendActualTransaction = newMoneyOperation.moneyInCash(moneyInCashRegister)
 
     expect(sendActualTransaction).toBeGreaterThan(expectedResult)
   })

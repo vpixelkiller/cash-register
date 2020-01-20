@@ -24,7 +24,7 @@ describe('Unitary test specs', ()=>{
     const moneyInCash = [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]
     const expectedResult = 335.40999999999997
 
-    const sendActualTransaction = newMoneyOperation.amountMoneyInCashRegister(moneyInCash)
+    const sendActualTransaction = newMoneyOperation.moneyInCash(moneyInCash)
 
     expect(sendActualTransaction).toEqual(expectedResult)
 
@@ -50,7 +50,7 @@ describe('Unitary test specs', ()=>{
     const newMoneyOperation = new MoneyOperations()
     const moneyInCash = [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]
     const moneyReturn = 233
-    const moneyInCashRegister = newMoneyOperation.amountMoneyInCashRegister(moneyInCash)
+    const moneyInCashRegister = newMoneyOperation.moneyInCash(moneyInCash)
     const receivedTransaction = newMoneyOperation.thereIsChangeEnought(moneyInCashRegister, moneyReturn)
 
     expect(true).toEqual(receivedTransaction)
