@@ -18,24 +18,24 @@ class CashRegister{
         const newMoneyOperation = new MoneyOperations()
         
         const moneyReturn = newMoneyOperation.moneyReturn(cash, price) 
-        const amountMoneyInCashRegister = newMoneyOperation.amountMoneyInCashRegister(moneyInCash)
+        const moneyInTheCash = newMoneyOperation.amountMoneyInCashRegister(moneyInCash)
         
         newMoneyOperation.putsMoneyInCashIfThereIsNot(moneyInCash)
-        this.cashConvert(moneyInCash)
+        this.organiceTheMoney(moneyInCash)
         
-        return this.thereIsChangeEnought(amountMoneyInCashRegister, moneyReturn)
+        return this.thereIsChangeEnought(moneyInTheCash, moneyReturn)
     }
     
-// Private
-
-    cashConvert(moneyInCash) {
+    // Private
+            
+    organiceTheMoney(moneyInCash) {
         const newConversions = new Conversions()
-        const moneyInCashToArraysConversion = newConversions.cashArray(moneyInCash)
-        
-        this.cashKeyArray = moneyInCashToArraysConversion[FIRST_ARRAY_INDEX]
-        this.cashValueArray = moneyInCashToArraysConversion[SECOND_ARRAY_INDEX]
-        this.reverseCashValueArray = this.cashValueArray.reverse()
-        this.reverseCashKeyArray = this.cashKeyArray.reverse()
+        const organizationArrays = newConversions.cashConvert(moneyInCash)
+
+        this.cashKeyArray = organizationArrays [0]
+        this.cashValueArray = organizationArrays [1]
+        this.reverseCashKeyArray = organizationArrays [2]
+        this.reverseCashValueArray = organizationArrays [3]
     }
 
     returnChange(status, change){

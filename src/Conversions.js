@@ -5,6 +5,20 @@ class Conversions {
     this.cashDictionary = {}
     this.cashValueArray = []
     this.cashKeyArray = []
+    this.reverseCashValueArray = []
+    this.reverseCashKeyArray = []
+
+  }
+
+  cashConvert(moneyInCash) {
+      const newConversions = new Conversions()
+      const moneyInCashToArraysConversion = newConversions.cashArray(moneyInCash)
+      
+      this.cashKeyArray = moneyInCashToArraysConversion[FIRST_ARRAY_INDEX]
+      this.cashValueArray = moneyInCashToArraysConversion[SECOND_ARRAY_INDEX]
+      this.reverseCashValueArray = this.cashValueArray.reverse()
+      this.reverseCashKeyArray = this.cashKeyArray.reverse()
+      return [this.cashKeyArray, this.cashValueArray, this.reverseCashKeyArray, this.reverseCashValueArray]
   }
 
   cashArray(moneyInCash){
