@@ -5,15 +5,12 @@ class MoneyOperations
     this.changeToReturn = []
     this.currentCoinAmount = 0
   }
-  workingTest(){
-    return 'money operations is working'
-  }
 
-  moneyReturn(cash, price){
+  calculatesTheMoneyToReturn(cash, price){
     return cash - price
   }
 
-  moneyInCash(moneyInCash){
+  returnsTheMoneyInCash(moneyInCash){
     const resultArray = 0
     
     if (!moneyInCash){return resultArray}
@@ -22,53 +19,40 @@ class MoneyOperations
 
   sumsMoneyInCash(moneyInCash, resultArray){
     for (let i = 0; i < moneyInCash.length; i++){
-        resultArray += moneyInCash[i][1]
+      resultArray += moneyInCash[i][1]
     }
     return resultArray
   } 
 
   putsMoneyInCashIfThereIsNot(moneyInCash) {
-      const notmoneyInCash = !moneyInCash
+    const notmoneyInCash = !moneyInCash
 
-      if (notmoneyInCash) {moneyInCash = []}
-      
-      return moneyInCash
+    if (notmoneyInCash) {moneyInCash = []}
+    
+    return moneyInCash
   }
 
-  thereIsChangeEnought(amountMoneyInCashRegister, moneyReturn){
+  isThereChangeEnought(amountMoneyInCashRegister, moneyReturn){
     const notEnoughtMoneyInCash = amountMoneyInCashRegister < moneyReturn
     if (notEnoughtMoneyInCash){return NOT_ENOUGHT_MONEY_IN_CASH}
     
     return true
   }
   
-  countEachCoin(reverseCashValueArray, moneyReturn, reverseCashKeyArray){
-    this.moreMoneyThanCoin(reverseCashValueArray, moneyReturn, reverseCashKeyArray)
+  countEachCoinAmount(reverseCashValueArray, moneyReturn, reverseCashKeyArray){
+    this.isThereMoreMoneyThanActualCoin(reverseCashValueArray, moneyReturn, reverseCashKeyArray)
 
     return this.changeToReturn
   }
 
-  moreMoneyThanCoin(reverseCashValueArray, moneyReturn, reverseCashKeyArray){
+  isThereMoreMoneyThanActualCoin(reverseCashValueArray, moneyReturn, reverseCashKeyArray){
     for (let count=0; count<=reverseCashValueArray.length; count++){
       var actualCoinAmount = reverseCashValueArray[count]
       var actualCoinPrice = COINPRICE[count]
       this.currentCoinAmount = 0
-      moneyReturn = this.substractFromReturnAmount(actualCoinPrice, moneyReturn, actualCoinAmount, reverseCashKeyArray, count)   
+      moneyReturn = this.substractFromMoneyReturn(actualCoinPrice, moneyReturn, actualCoinAmount, reverseCashKeyArray, count)   
     }
       return this.changeToReturn        
-  }
-
-  substractFromReturnAmount(actualCoinPrice, moneyReturn, actualCoinAmount, reverseCashKeyArray, count)
-  {
-    if (actualCoinPrice <= moneyReturn) {
-      moneyReturn = this.returnTimesAndRest(actualCoinPrice, actualCoinAmount, moneyReturn)
-      this.addEachAmonutEachCoinKind(reverseCashKeyArray, count, actualCoinPrice)
-    }
-    return moneyReturn
-  }
-
-  addEachAmonutEachCoinKind(reverseCashKeyArray, count, actualCoinPrice) {
-    this.changeToReturn.push([reverseCashKeyArray[count], this.currentCoinAmount * actualCoinPrice])
   }
 
   addCointypeAndPrice(keyList, coinAndQuantity)
@@ -78,20 +62,19 @@ class MoneyOperations
   }
 
   returnTimesAndRest(actualCoinPrice, actualCoinAmount, moneyReturn){
-
     while (this.testThereAreCoinsAndResult(moneyReturn, actualCoinAmount, actualCoinPrice)){
-        moneyReturn = moneyReturn.toFixed(2)
-        moneyReturn -= actualCoinPrice
-        actualCoinAmount -= actualCoinPrice
-        this.currentCoinAmount += 1
+      moneyReturn = moneyReturn.toFixed(2)
+      moneyReturn -= actualCoinPrice
+      actualCoinAmount -= actualCoinPrice
+      this.currentCoinAmount += 1
     }
     return [moneyReturn, this.currentCoinAmount]
 }
 
   testThereAreCoinsAndResult(moneyReturn, actualCoinAmount, actualCoinPrice){
     const thereIsMoney = this.thereIsStillMoneyToReturn (moneyReturn)
-    const notValidCoin = this.actualCoinBiggerThanMoneyToReturn(moneyReturn, actualCoinPrice)
-    const hasEnoughMoney = this.actualCoinAmountBiggerThanActualCoinPrice(actualCoinAmount, actualCoinPrice)
+    const notValidCoin = this.isActualCoinBiggerThanMoneyToReturn(moneyReturn, actualCoinPrice)
+    const hasEnoughMoney = this.isActualCoinAmountBiggerThanActualCoinPrice(actualCoinAmount, actualCoinPrice)
     
     return !(thereIsMoney || notValidCoin || hasEnoughMoney)
   }
@@ -101,31 +84,22 @@ class MoneyOperations
     return moneyReturn <= 0
   }
 
-  actualCoinBiggerThanMoneyToReturn(moneyReturn, actualCoinPrice)
+  isActualCoinBiggerThanMoneyToReturn(moneyReturn, actualCoinPrice)
   {
     return moneyReturn < actualCoinPrice
   }
 
-  actualCoinAmountBiggerThanActualCoinPrice(actualCoinAmount, actualCoinPrice)
+  isActualCoinAmountBiggerThanActualCoinPrice(actualCoinAmount, actualCoinPrice)
   {
     return actualCoinAmount < actualCoinPrice
   }
 
-  isThereMoreMoneyThanCoin(moneyReturn, reverseCashValueArray, actualCoinAmount, reverseCashKeyArray){
-    for (let count=0; count<=reverseCashValueArray.length; count++){
-      var actualCoinAmount = reverseCashValueArray[count]
-      var actualCoinPrice = COINPRICE[count]
-      this.currentCoinAmount = 0
-      moneyReturn = this.substractFromReturnAmount(actualCoinPrice, moneyReturn, actualCoinAmount, reverseCashKeyArray, count)   
-    }
-  }
-
-  substractFromReturnAmount(actualCoinPrice, moneyReturn, actualCoinAmount, reverseCashKeyArray, count) {
-    moneyReturn = this.enouthMoneyReturnForSubstractActualCoinPrice(actualCoinPrice, moneyReturn, actualCoinAmount, reverseCashKeyArray, count)
+  substractFromMoneyReturn(actualCoinPrice, moneyReturn, actualCoinAmount, reverseCashKeyArray, count) {
+    moneyReturn = this.isThereEnouthMoneyReturnForSubstractActualCoinPrice(actualCoinPrice, moneyReturn, actualCoinAmount, reverseCashKeyArray, count)
     return moneyReturn
   }
 
-  enouthMoneyReturnForSubstractActualCoinPrice(actualCoinPrice, moneyReturn, actualCoinAmount, reverseCashKeyArray, count) {
+  isThereEnouthMoneyReturnForSubstractActualCoinPrice(actualCoinPrice, moneyReturn, actualCoinAmount, reverseCashKeyArray, count) {
     if (this.isActualCoinPriceSmallerThanTheMoneyReturn(actualCoinPrice, moneyReturn)){
       moneyReturn = this.substractThisCoinPriceFromMoneyReturn(actualCoinPrice, actualCoinAmount, moneyReturn, reverseCashKeyArray, count)
     }
@@ -138,22 +112,30 @@ class MoneyOperations
 
   substractThisCoinPriceFromMoneyReturn(actualCoinPrice, actualCoinAmount, moneyReturn, reverseCashKeyArray, count) {
     moneyReturn = this.timesSubstractedActualCoinAndRest(actualCoinPrice, actualCoinAmount, moneyReturn)
-    this.addEachAmonutEachCoinKind(reverseCashKeyArray, count, actualCoinPrice)
+    this.addCoinToChangeToReturn(reverseCashKeyArray, count, actualCoinPrice)
     return moneyReturn
   }
 
   timesSubstractedActualCoinAndRest(actualCoinPrice, actualCoinAmount, moneyReturn){
     const newMoneyOperation = new MoneyOperations()
+
     const timesSubstractedActualCoinAndRest = newMoneyOperation.returnTimesAndRest(actualCoinPrice, actualCoinAmount, moneyReturn)
-    moneyReturn = timesSubstractedActualCoinAndRest[0]
+   
     this.currentCoinAmount = timesSubstractedActualCoinAndRest[1]
-    return moneyReturn
+    return moneyReturn = timesSubstractedActualCoinAndRest[0]
   }
 
-  addEachAmonutEachCoinKind(reverseCashKeyArray, count, actualCoinPrice){
+  addCoinToChangeToReturn(reverseCashKeyArray, count, actualCoinPrice){
     this.changeToReturn.push([reverseCashKeyArray[count], this.currentCoinAmount * actualCoinPrice])
   }
 
+  notEnoughtMoneyInCash(amountMoneyInCashRegister, moneyReturn){
+    return amountMoneyInCashRegister < moneyReturn
+  }
 
-  
+  changeOperate(reverseCashValueArray, moneyReturn, reverseCashKeyArray){
+    const newMoneyOperation = new MoneyOperations()
+
+    return newMoneyOperation.countEachCoinAmount(reverseCashValueArray, moneyReturn, reverseCashKeyArray)        
+  }
 }

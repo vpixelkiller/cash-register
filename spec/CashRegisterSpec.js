@@ -16,7 +16,7 @@ describe ('cashRegister_test',()=>{
     const moneyInCashRegister = [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]
     const expectedResult = 0
     
-    const sendActualTransaction = newMoneyOperation.moneyInCash(moneyInCashRegister)
+    const sendActualTransaction = newMoneyOperation.returnsTheMoneyInCash(moneyInCashRegister)
 
     expect(sendActualTransaction).toBeGreaterThan(expectedResult)
   })

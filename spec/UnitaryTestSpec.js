@@ -1,20 +1,11 @@
 describe('Unitary test specs', ()=>{
-  it('Test connection', ()=>{
-    const newMoneyOperation = new MoneyOperations()
-    const expectedResult = "money operations is working"
-
-    const sendActualTransaction = newMoneyOperation.workingTest()
-
-    expect(sendActualTransaction).toEqual(expectedResult)
-  })
-
   it('returns the amount of money to return', ()=>{
     const newMoneyOperation = new MoneyOperations()
     const price = 3.26
     const cash = 100
     const expectedResult = cash - price 
 
-    const sendActualTransaction = newMoneyOperation.moneyReturn(cash, price)
+    const sendActualTransaction = newMoneyOperation.calculatesTheMoneyToReturn(cash, price)
 
     expect(sendActualTransaction).toEqual(expectedResult)
   })
@@ -24,7 +15,7 @@ describe('Unitary test specs', ()=>{
     const moneyInCash = [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]
     const expectedResult = 335.40999999999997
 
-    const sendActualTransaction = newMoneyOperation.moneyInCash(moneyInCash)
+    const sendActualTransaction = newMoneyOperation.returnsTheMoneyInCash(moneyInCash)
 
     expect(sendActualTransaction).toEqual(expectedResult)
 
@@ -50,8 +41,8 @@ describe('Unitary test specs', ()=>{
     const newMoneyOperation = new MoneyOperations()
     const moneyInCash = [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]
     const moneyReturn = 233
-    const moneyInCashRegister = newMoneyOperation.moneyInCash(moneyInCash)
-    const receivedTransaction = newMoneyOperation.thereIsChangeEnought(moneyInCashRegister, moneyReturn)
+    const moneyInCashRegister = newMoneyOperation.returnsTheMoneyInCash(moneyInCash)
+    const receivedTransaction = newMoneyOperation.isThereChangeEnought(moneyInCashRegister, moneyReturn)
 
     expect(true).toEqual(receivedTransaction)
   })
@@ -108,8 +99,8 @@ describe('Unitary test specs', ()=>{
     const moneyReturnBigger = 0.5
     const actualCoinPrice = 2
 
-    const returnTransaction = newMoneyOperation.actualCoinBiggerThanMoneyToReturn(moneyReturn, actualCoinPrice)
-    const returnTransactionBigger = newMoneyOperation.actualCoinBiggerThanMoneyToReturn(moneyReturn, moneyReturnBigger)
+    const returnTransaction = newMoneyOperation.isActualCoinBiggerThanMoneyToReturn(moneyReturn, actualCoinPrice)
+    const returnTransactionBigger = newMoneyOperation.isActualCoinBiggerThanMoneyToReturn(moneyReturn, moneyReturnBigger)
 
     expect (expectedResult).toEqual(returnTransaction)
     expect (expectedResultBigger).toEqual(returnTransactionBigger)
@@ -121,7 +112,7 @@ describe('Unitary test specs', ()=>{
     const actualCoinAmount = 0.5
     const actualCoinPrice = 2
     
-    const returnTransaction = newMoneyOperation.actualCoinAmountBiggerThanActualCoinPrice(actualCoinAmount, actualCoinPrice)
+    const returnTransaction = newMoneyOperation.isActualCoinAmountBiggerThanActualCoinPrice(actualCoinAmount, actualCoinPrice)
 
     expect (expectedResult).toEqual(returnTransaction)
   })

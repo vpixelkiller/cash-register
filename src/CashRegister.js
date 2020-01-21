@@ -17,15 +17,14 @@ class CashRegister{
     execute(price, cash, moneyInCash){
         const newMoneyOperation = new MoneyOperations()
         
-        const moneyReturn = newMoneyOperation.moneyReturn(cash, price) 
-        const moneyInTheCash = newMoneyOperation.moneyInCash(moneyInCash)
+        const moneyReturn = newMoneyOperation.calculatesTheMoneyToReturn(cash, price) 
+        const moneyInTheCash = newMoneyOperation.returnsTheMoneyInCash(moneyInCash)
         
         newMoneyOperation.putsMoneyInCashIfThereIsNot(moneyInCash)
         this.organiceTheMoney(moneyInCash)
         
-        if (this.notEnoughtMoneyInCash(moneyInTheCash, moneyReturn)) {return NOT_ENOUGHT_MONEY_IN_CASH}
-
-        const changeDict = this.changeOperate(moneyReturn)
+        if (newMoneyOperation.notEnoughtMoneyInCash(moneyInTheCash, moneyReturn)) {return NOT_ENOUGHT_MONEY_IN_CASH}
+        const changeDict = newMoneyOperation.changeOperate(this.reverseCashValueArray, moneyReturn, this.reverseCashKeyArray)
 
         return this.returnChange ("OPEN", changeDict)    
     }
@@ -47,16 +46,6 @@ class CashRegister{
         this.actual_state.change = change
 
         return this.actual_state
-    }
-
-    notEnoughtMoneyInCash(amountMoneyInCashRegister, moneyReturn){
-        return amountMoneyInCashRegister < moneyReturn
-    }
-
-    changeOperate(moneyReturn){
-        const newMoneyOperation = new MoneyOperations()
-
-        return newMoneyOperation.countEachCoin(this.reverseCashValueArray, moneyReturn, this.reverseCashKeyArray)        
     }
 }
 
