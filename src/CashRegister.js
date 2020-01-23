@@ -24,13 +24,19 @@ class CashRegister{
         this.organiceTheMoney(moneyInCash)
         
         if (newMoneyOperation.notEnoughtMoneyInCash(moneyInTheCash, moneyReturn)) {return NOT_ENOUGHT_MONEY_IN_CASH}
-        const changeDict = newMoneyOperation.changeOperate(this.reverseCashValueArray, moneyReturn, this.reverseCashKeyArray)
 
-        return this.returnChange ("OPEN", changeDict)    
+        return this.returnChange ("OPEN", this.getChangeResult(moneyReturn))    
     }
     
+    
     // Private
-            
+    
+    getChangeResult(moneyReturn) {
+        const newMoneyOperation = new MoneyOperations()
+
+        return newMoneyOperation.changeOperate(this.reverseCashValueArray, moneyReturn, this.reverseCashKeyArray)
+    }
+
     organiceTheMoney(moneyInCash) {
         const newConversions = new Conversions()
         const organizationArrays = newConversions.cashConvert(moneyInCash)

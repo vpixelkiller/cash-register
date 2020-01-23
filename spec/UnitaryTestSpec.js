@@ -1,3 +1,6 @@
+const KEYS_ARRAY = ["PENNY", "NICKEL", "DIME", "QUARTER", "ONE", "FIVE", "TEN", "TWENTY", "ONE HUNDRED"]
+
+
 describe('Unitary test specs', ()=>{
   it('returns the amount of money to return', ()=>{
     const newMoneyOperation = new MoneyOperations()
@@ -25,14 +28,13 @@ describe('Unitary test specs', ()=>{
   it('converts the dictionary in arrays', ()=>{
     const newMoneyOperation = new Conversions()
     const moneyInCash = [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]
-    const keysArray = ["PENNY", "NICKEL", "DIME", "QUARTER", "ONE", "FIVE", "TEN", "TWENTY", "ONE HUNDRED"]
     const valuesArray = [1.01, 2.05, 3.1, 4.25, 90, 55, 20, 60, 100]
     const conversionsKeysArray = newMoneyOperation.returnKeysArray()
     const conversionsValuesArray = newMoneyOperation.returnValuesArray()
-    const expectedResult = [keysArray, valuesArray]
+    const expectedResult = [KEYS_ARRAY, valuesArray]
     const receivedTransaction = [conversionsKeysArray, conversionsValuesArray]
 
-    newMoneyOperation.cashArray(moneyInCash)
+    newMoneyOperation.cashCoinAndQuantity(moneyInCash)
 
     expect(expectedResult).toEqual(receivedTransaction)
   })
@@ -50,11 +52,10 @@ describe('Unitary test specs', ()=>{
   it('returns reversed the array sent',()=>{
     const newConversions = new Conversions()
     const valuesArray = [1.01, 2.05, 3.1, 4.25, 90, 55, 20, 60, 100]
-    const keysArray = ["PENNY", "NICKEL", "DIME", "QUARTER", "ONE", "FIVE", "TEN", "TWENTY", "ONE HUNDRED"]
-    const expectedKeyResult = keysArray.reverse()
+    const expectedKeyResult = KEYS_ARRAY.reverse()
     const expectedValueResult = valuesArray.reverse()
 
-    const sentKeyTransaction = newConversions.reverseArray(keysArray)
+    const sentKeyTransaction = newConversions.reverseArray(KEYS_ARRAY)
     const sentValueTransaction = newConversions.reverseArray(valuesArray)
 
     expect(expectedKeyResult).toEqual(sentKeyTransaction)
